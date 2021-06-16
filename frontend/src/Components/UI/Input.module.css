@@ -1,0 +1,22 @@
+.Input label{
+    text-transform: uppercase;
+    font-weight: 600;
+    display: block;
+}
+
+.Input{
+   margin-bottom: 10px;
+}
+
+.Input input, .Input textarea{
+    width: 90%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid white;
+    margin-top: 5px;
+}
+.invalid{
+    background-color: #f5cece;
+}
+

@@ -1,0 +1,35 @@
+.contactContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 112px;
+}
+.containerSocial{
+
+    display: flex;
+    flex-direction: row;
+    border-bottom: 4px solid white;
+    margin:10px 250px;
+    justify-content: center;
+    
+}
+.social {
+    opacity:1;
+    margin: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: inline-block;
+    color: #FFF;
+    font-size: 10px;
+    text-align: center;
+  }
+   .social i{
+     margin-top: 5px;
+    }
+    
+    .social a {
+      color: #FFF;
+    }
+  
