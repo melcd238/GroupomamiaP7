@@ -4,13 +4,18 @@ module.exports = (sequelize, Sequelize)=>{
             type: Sequelize.STRING,
                },
         contenu: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING,
                 },
         gifPost :{
             type: Sequelize.STRING,
             
           },
-        likes: Sequelize.INTEGER,
+        likes: {
+            type: Sequelize.INTEGER,
+        },
+        nbrComment: {
+            type: Sequelize.INTEGER,
+        }
           
 
       

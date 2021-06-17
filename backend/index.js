@@ -1,12 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require('path');
 const cors = require("cors");
-
 const app = express();
 
 const usersRoutes = require('./Routes/User')
-
-
+const postRoutes = require('./Routes/Post')
 // Sequelize
 const db =require('./models/Index');
 const Role = db.role;
@@ -27,12 +26,8 @@ db.sequelize.sync({force: true}).then(() => {
       name: "admin"
     });
   }
-
-
-
-
 //var corsOptions = {
- // origin: "http://localhost:8081"
+ // origin: "http://localhost:3000"
 //};
 // pour les headers de mes requêtes ... voir plus tard pour modifier.CORS
 app.use((req, res, next) => {
@@ -41,19 +36,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-
 //app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome" });
-});
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.use('/api',usersRoutes);
+app.use('/api',postRoutes)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
