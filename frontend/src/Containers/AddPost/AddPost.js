@@ -1,6 +1,8 @@
 // Librairie
 import React, { useState } from 'react';
-import classes from '../AddPost/AddPost.module.css'
+import classes from '../AddPost/AddPost.module.css';
+import axios from '../../Services/AxiosApi';
+import authHeader from '../../Services/AuthHeader';
 
 //Components
 import Input from '../../Components/UI/Input'
@@ -43,21 +45,22 @@ function FilActu (props){
             touched: false,
             errorMessage: "Le contenu doit faire entre 5 et 400 caractères"
         },
-        imageUrl:{
+        gifPost:{
             elementType: 'input',
             elementCongig:{
-                placeholder: "url"
-                
+                type: 'file',
             },
             value: '',
             label: 'Image',
             valid: false,
+           // accept:"image/png, image/jpeg, image/jpg, image/gif",
             validation:{
                 required: false,
-            },
-            touched: false,
-            errorMessage: "Le contenu doit faire entre 5 et 400 caractères"
-        }
+            }
+            
+        },
+
+        
 
     })
     const [valid, setValid] = useState(false)
@@ -101,7 +104,21 @@ function FilActu (props){
 };
 const formHandler =(event)=>{
     event.preventDefault();
-    console.log('test')
+    const newPost = {
+        titre:inputs.titre.value,
+        contenu:inputs.contenu.value,
+        image:inputs.image.value
+       
+    }
+    axios.post('user/createPost',newPost ,{ headers: authHeader() })
+    .then(response=>{
+        console.log(response)
+        props.history.replace('/filActu') 
+       // window.location.reload(); 
+    })
+    .catch(error =>{
+        console.log(error)
+    })
 }
 
     // transformation de mon objet en tableau
@@ -128,7 +145,8 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
-        <input className={classes.inputSubmitAddMessage} type="submit" value="Publier" disabled={!valid}/>
+        
+       <input className={classes.inputSubmitAddMessage} type="submit" value="Publier" disabled={!valid}/>
     </form>
     )
     return(

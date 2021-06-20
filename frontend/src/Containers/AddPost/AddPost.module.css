@@ -2,7 +2,7 @@
     background-color: #cfc5a5;
     width: 80%;
     max-width: 500px;
-    height: 40vh;
+    height: 44vh;
     padding: 8px;
     margin:  40px auto;
     border-radius: 10px;
@@ -17,4 +17,12 @@
 }
 .inputSubmitAddMessage:hover{
     background-color: white;
+}
+.btnImage{
+    background-color: #faf3e0;
+    border-radius: 5px;
+    border: 1px solid #cfc5a5;
+    cursor: pointer;
+    font-weight: bolder;
+    padding: 10px;
 }
