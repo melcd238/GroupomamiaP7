@@ -29,6 +29,9 @@ function CardPost(props){
                 <i className="far fa-thumbs-up" style={{margin:"0px 20px",cursor:"pointer"}}></i>
                <i className="far fa-comments" style={{margin:"0px 20px",cursor:"pointer"}}> <span>{props.post.nbrComment}</span> </i>
                 </div>
+                <div>
+                    <i className="fas fa-reply" style={{cursor:"pointer"}}><span style={{marginLeft:"5px"}}>Commenter</span> </i>
+                </div>
 
                 <div>
                 <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>

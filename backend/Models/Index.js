@@ -64,13 +64,20 @@ db.role.belongsToMany(db.user, {
     onDelete:"cascade"
   }); 
   db.comment.belongsTo(db.post,{
-    foreignKey:"postId"
+    foreignKey:{
+      name: "postId",
+      allowNull: false
+    }
+    
   });
   db.user.hasMany(db.comment,{
     onDelete:"cascade"
   });
   db.comment.belongsTo(db.user,{
-    otherKey:"userId"
+    foreignKey:{
+      name:"userId",
+      allowNull: false
+     }
   });
   db.like.belongsTo(db.post, { 
     foreignKey: "postId", onDelete: "CASCADE" 

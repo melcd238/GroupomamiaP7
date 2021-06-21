@@ -95,7 +95,6 @@ function FilActu (props){
       // Change la valeur
     const newInputs = {...inputs};
     newInputs[id].value = event.target.value;
-    newInputs.gifPost.value= event.target.value;
     newInputs[id].touched = true;
       // Verification de la valeur
       newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation); 

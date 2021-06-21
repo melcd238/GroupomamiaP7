@@ -128,7 +128,8 @@ exports.deletePost = (req, res, next)=>{
 // Voir 1 Post
 
 exports.getOnePost=(req,res,next)=>{
-    Post.findOne({
+    const id = req.params.id
+    Post.findOne({ where : {id : id},
         include: [{
             model: User
         }, {

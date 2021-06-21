@@ -6,14 +6,16 @@ import authHeader from '../../Services/AuthHeader';
 
 //Components
 import DisplayedPosts from '../../Components/DisplayedPosts/DisplayedPosts'
+import DisplayedComments from '../../Components/DisplayedComments/DisplayedComments'
 
 
 function FilActu (props){
 
     // State
     const [posts , setPosts] = useState([]);
-    //ComponentDidMount
-    useEffect(()=>{
+    const [haveComments , setHaveComments] = useState(false)
+    // Fonctions
+    const getAllPost = ()=>{
         axios.get('user/getAllPost',{ headers: authHeader() })
         .then(response=>{
            
@@ -24,6 +26,10 @@ function FilActu (props){
         .catch(error =>{
             console.log(error)
         })
+    }
+    //ComponentDidMount
+    useEffect(()=>{
+        getAllPost()
        
     }, [])
 
@@ -34,6 +40,9 @@ function FilActu (props){
         <div className={classes.container}>
         <h1>Fil d'actualité </h1>
         <DisplayedPosts posts={posts}></DisplayedPosts>
+
+        <DisplayedComments posts={posts}></DisplayedComments>
+
           
         </div>
     )
