@@ -111,7 +111,7 @@ function SignUp (props){
     axios.post('register', user)
     .then(response =>{
         console.log(response)
-        props.history.replace('/login')
+        props.history.replace('/login') //props.match.params.id 
         
     })
     .catch(error => {

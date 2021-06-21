@@ -29,6 +29,7 @@ db.sequelize = sequelize;
 
 db.user = require("../models/User.js")(sequelize, Sequelize);
 db.role = require("../models/Role.js")(sequelize, Sequelize);
+db.profil = require('../Models/Profil')(sequelize, Sequelize);
 db.post = require('../Models/Post')(sequelize, Sequelize);
 db.comment = require ('../Models/Comment')(sequelize, Sequelize);
 db.like = require('../Models/Like')(sequelize, Sequelize);
@@ -44,6 +45,12 @@ db.role.belongsToMany(db.user, {
     foreignKey: "userId",
     otherKey: "roleId"
   });
+  db.user.hasOne(db.profil,{
+    onDelete : "cascade"
+  })
+  db.profil.belongsTo(db.user,{
+    foreignKey: "userId",
+  })
   db.post.belongsTo(db.user, {
     foreignKey:{
       name:"userId",
@@ -57,7 +64,7 @@ db.role.belongsToMany(db.user, {
     onDelete:"cascade"
   }); 
   db.comment.belongsTo(db.post,{
-    foreignKey:"messageId"
+    foreignKey:"postId"
   });
   db.user.hasMany(db.comment,{
     onDelete:"cascade"

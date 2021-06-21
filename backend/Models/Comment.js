@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize)=>{
     const Comment = sequelize.define('comment',{
        
-          contenu :{
+          content :{
             type: Sequelize.TEXT,
           } 
   });

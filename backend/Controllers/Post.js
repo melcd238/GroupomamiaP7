@@ -26,7 +26,7 @@ exports.createPost=(req,res,next)=>{
                 return res.status(201).json({post})
             }).catch(error=>{
                 console.log(error)
-                return res.status(404).json({message: "Impossible de créer un Post!"})   
+                return res.status(404).json({message: "Impossible de créer un Post!"})    
             })
         }
     })

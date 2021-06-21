@@ -6,6 +6,8 @@ const app = express();
 
 const usersRoutes = require('./Routes/User')
 const postRoutes = require('./Routes/Post')
+const profilRoutes = require('./Routes/Profil')
+const commentRoutes = require('./Routes/Comment')
 // Sequelize
 const db =require('./models/Index');
 const Role = db.role;
@@ -43,7 +45,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.use('/api',usersRoutes);
-app.use('/api',postRoutes)
+app.use('/api',postRoutes);
+app.use('/api',profilRoutes);
+app.use('/api',commentRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

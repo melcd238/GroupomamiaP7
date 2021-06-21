@@ -27,7 +27,10 @@ function Input(props){
                                         className = {inputClasses}
                                         onChange = {props.changed}
                                         id={props.id}></textarea>);
-          break;                                
+          break;
+          default:
+              console.log("choisir un autre inputElement")
+                                          
     }
 
     return(

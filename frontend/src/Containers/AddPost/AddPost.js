@@ -10,6 +10,7 @@ import Input from '../../Components/UI/Input'
 
 function FilActu (props){
     // States
+
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -49,21 +50,24 @@ function FilActu (props){
             elementType: 'input',
             elementCongig:{
                 type: 'file',
+                accept: ".png, .jpg, .jpeg, .gif"
             },
-            value: '',
+            value: "",
             label: 'Image',
-            valid: false,
-           // accept:"image/png, image/jpeg, image/jpg, image/gif",
-            validation:{
-                required: false,
-            }
+            valid: true,
+           
+           validation:{
+            required: false,
+            // fichier accepté passé dans la configuration 
             
-        },
+        }
+        }
 
         
 
     })
     const [valid, setValid] = useState(false)
+    
 
 
       //Fonctions :
@@ -79,6 +83,7 @@ function FilActu (props){
      if(rules.maxLength){
          isValid = value.length <= rules.maxLength && isValid
      }
+    
      return isValid;
 
  };
@@ -90,10 +95,11 @@ function FilActu (props){
       // Change la valeur
     const newInputs = {...inputs};
     newInputs[id].value = event.target.value;
+    newInputs.gifPost.value= event.target.value;
     newInputs[id].touched = true;
       // Verification de la valeur
       newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation); 
-
+   
     setInputs(newInputs);
       // Verification du formulaire
     let formIsValid = true;
@@ -107,10 +113,10 @@ const formHandler =(event)=>{
     const newPost = {
         titre:inputs.titre.value,
         contenu:inputs.contenu.value,
-        image:inputs.image.value
+        gifPost:inputs.gifPost.value
        
     }
-    axios.post('user/createPost',newPost ,{ headers: authHeader() })
+    axios.post('user/createPost',newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
     .then(response=>{
         console.log(response)
         props.history.replace('/filActu') 
