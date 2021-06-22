@@ -4,22 +4,18 @@ const { post } = require("../models");
 const User = db.user;
 const Post = db.post;
 const Comment = db.comment
+const UserId = require('../Services/GetUserId')
 
 
 
 // Creation d'un Post 
 exports.createPost=(req,res,next)=>{
-    User.findOne(req.body.userId)
-    .then(userFound=>{
-        if(!userFound){
-            const message = "Le User n'existe pas"  
-            return res.status(400).json({ erreur: message})
-        }else{
+    // Rajouter une condition pour qu'au moins le champs file et contenu soit rempli.
             Post.create({
                 titre: req.body.titre,
                 contenu: req.body.contenu,
                 gifPost: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null, 
-                userId : userFound.id,
+                userId : UserId(req),
                 likes: 0,
                 nbrComment: 0
             }).then(post=>{
@@ -28,27 +24,22 @@ exports.createPost=(req,res,next)=>{
                 console.log(error)
                 return res.status(404).json({message: "Impossible de créer un Post!"})    
             })
-        }
-    })
+ }
+    
 
-}
+
 // Modifier un Post 
 exports.updatePost=(req,res,next)=>{ 
     const id = req.params.id;
-    User.findOne(req.body.userId)
-    .then(userFound=>{
-        if(!userFound){
-            const message = "Le user n'existe pas "
-            return res.status(400).json({ erreur: message})
-        }else{
-            Post.findOne({ where: { id: id } })
+
+     Post.findOne({ where: { id: id } })
 
           .then(post=>{
               if(!post){
                 const message = "Le post n'existe pas"
                 return res.status(400).json({ erreur: message})
               } 
-              if(post.userId === userFound.id){
+              if(post.userId ===  UserId(req)){
                 if (req.file){
                     if (post.gifPost !== null){
                         const fileName = post.gifPost.split('/upload/')[1];
@@ -72,26 +63,22 @@ exports.updatePost=(req,res,next)=>{
                   })    
               }else {
                 const message = "Modification non autorisée!"
-        return res.status(401).json({ message});
-               } })
+                 return res.status(401).json({ message});
+               } }) 
+               .catch(error =>{
+                   console.log(error)
+               }) 
         }
-    }).catch(error=>{
-        res.status(500).json({ error })
-    })
+   
+        
 
-}
+
 // Supprimer un post 
 exports.deletePost = (req, res, next)=>{
     const id = req.params.id;
-    User.findOne(req.body.userId)
-      .then(userFound =>{
-          if(!userFound){
-            const message = "Le user n'existe pas "
-            return res.status(400).json({  message})
-          } else{
-             Post.findOne({where : {id: id}})
+    Post.findOne({where : {id: id}})
              .then( post =>{
-                if(post.userId === userFound.id){
+                if(post.userId === UserId(req)){
                     if (post.gifPost !== null){
                         const fileName = post.gifPost.split('/upload/')[1];
                         fs.unlink(`upload/${fileName}`, (err => {
@@ -116,14 +103,10 @@ exports.deletePost = (req, res, next)=>{
                   return res.status(401).json({ message});  
                 }
              })
-             .catch()
+             .catch(error=>{
+                 console.log(error)
+             })
              
-          }
-      })
-      .catch(error=>{
-        res.status(500).json({ error }) 
-      })
-    
 }
 // Voir 1 Post
 
@@ -138,10 +121,7 @@ exports.getOnePost=(req,res,next)=>{
                 model: User
             }],
         }]
-    }
-        
-
-    ).then(onePost =>{
+    }).then(onePost =>{
         if(!onePost){
             const message = "Le Post n'existe pas "
             return res.status(400).json({ erreur: message})

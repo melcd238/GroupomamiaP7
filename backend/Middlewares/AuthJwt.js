@@ -11,7 +11,7 @@ verifyToken = (req,res,next)=>{
       const message = `No Token provided`
       return res.status(403).json({message});
      }
-     const decodedToken = jwt.verify(token,config.secret);
+     const decodedToken = jwt.verify(token,config.SECRET);
      const userId = decodedToken.userId
      if (req.body.userId && req.body.userId !== userId) {
       const message = `User ID non valable`

@@ -70,7 +70,7 @@ exports.login = (req,res,next)=>{
             const message = 'Password non valide'
             return res.status(401).json({message})
         }
-        let token = jwt.sign({userId: user.id}, config.secret, {
+        let token = jwt.sign({userId: user.id}, config.SECRET, {
             expiresIn : 86400 // 24H
         });
         let authorities = [];
