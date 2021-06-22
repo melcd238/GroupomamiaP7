@@ -71,7 +71,8 @@ db.role.belongsToMany(db.user, {
     
   });
   db.user.hasMany(db.comment,{
-    onDelete:"cascade"
+    onDelete:"cascade",
+    
   });
   db.comment.belongsTo(db.user,{
     foreignKey:{

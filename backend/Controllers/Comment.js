@@ -17,17 +17,18 @@ exports.createComment = (req, res ,next)=>{
     }
     else{
         Comment.create({
-                    usedId: idUser ,
+                    userId: idUser ,
                     postId:idPost,
                     content: req.body.content
         })
+        
         Post.findOne({where:{id : idPost}})
           
            .then(post=>{
                if(!post){
                    return res.status(400).json({message:"le post n'existe pas"})
                }
-               post.update({nbrComment : post.nbrComment + 1}, {id : idPost})
+               post.update({nbrComment : post.nbrComment + 1}, {id : idPost}) 
            })
            .catch(error=>{
                console.log(error)
