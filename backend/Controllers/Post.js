@@ -138,9 +138,7 @@ exports.getOnePost=(req,res,next)=>{
 // Voir tous les Posts
 exports.getAllPost=(req,res,next)=>{
     Post.findAll({
-        include: [{
-            model: User
-        }, {
+        include: [{ model: User }, {
             model: Comment,
             include: [{
                 model: User

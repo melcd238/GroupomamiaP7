@@ -74,16 +74,40 @@ exports.updateComment = (req, res, next)=>{
 }  
 //Suppression d'un commentaire
 exports.deleteComment = (req ,res ,next)=>{
+    const idComment = req.params.id
+    const idUser = UserId(req)
+    Comment.findOne({where : { id : idComment}})
+     // penser à decrementer le nbrComment dans Post 
 
 } 
 // avoir un commentaire (id du comment)
 exports.getOneComment = (req, res ,next)=>{
+    const idComment = req.params.id;
+    Comment. findOne({where : {id : idComment}})
+       .then( comment=>{
+           return res.status(200).json({comment})
+       })
+       .catch(error=>{
+           console.log(error)
+       })
    
 
 }
 // Avoir tous les commentaires pour un message (id du post )
 exports.getAllComment = (req, res ,next)=>{
-  
- }
-   
+    const idPost = req.params.id
+    Comment.findAll({ where : { postId : idPost}}, 
+       {include: [{
+            model: User
+        }],
+        order: [[
+            "createdAt", "DESC"
+        ]]
+    }).then( allComments=>{
+        return res.status(200).json({allComments})
+    })
+      .catch(error=>{
+          console.log(error)
+      })
+ }   
     
