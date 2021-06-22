@@ -13,7 +13,7 @@ function FilActu (props){
 
     // State
     const [posts , setPosts] = useState([]);
-    const [haveComments , setHaveComments] = useState(false)
+    
     // Fonctions
     const getAllPost = ()=>{
         axios.get('user/getAllPost',{ headers: authHeader() })

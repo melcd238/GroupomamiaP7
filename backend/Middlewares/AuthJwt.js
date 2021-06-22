@@ -6,16 +6,18 @@ const User = db.user;
 // on verifie qu'il y a un token 
 verifyToken = (req,res,next)=>{
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers.authorization.split(" ")[1];
+    console.log(token)
     if(!token){
       const message = `No Token provided`
       return res.status(403).json({message});
      }
-     const decodedToken = jwt.verify(token,config.SECRET);
+     const decodedToken = jwt.verify(token,config.SECRET_TOKEN);
+     console.log(decodedToken)
      const userId = decodedToken.userId
+     console.log(userId)
      if (req.body.userId && req.body.userId !== userId) {
-      const message = `User ID non valable`
-      return res.status(403).json({message});
+      throw 'ID utilisateur non valable';
   
     } else {
       req.user = decodedToken;

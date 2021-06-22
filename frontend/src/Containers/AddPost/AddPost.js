@@ -8,7 +8,7 @@ import authHeader from '../../Services/AuthHeader';
 import Input from '../../Components/UI/Input'
 
 
-function FilActu (props){
+function AddPost (props){
     // States
 
     const [inputs, setInputs] = useState({
@@ -161,4 +161,4 @@ const formHandler =(event)=>{
     )
 }
 
-export default FilActu
+export default AddPost

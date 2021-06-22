@@ -12,11 +12,11 @@ const commentRoutes = require('./Routes/Comment')
 const db =require('./models/Index');
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-    console.log('Drop and Resync Db');
-    initial();
-  });
-
+db.sequelize.sync({ force: true }).then(() => {
+  console.log('Synchronise');
+  initial();
+});
+ 
   function initial() {
     Role.create({
       id: 1,

@@ -11,6 +11,7 @@ import SignUp from './Containers/SignUp/SignUp'
 import Login from './Containers/Login/Login'
 import FilActu from './Containers/FilActu/FilActu'
 import AddPost from './Containers/AddPost/AddPost'
+import AddComment from './Containers/AddComment/AddComment'
 import Contact from './Containers/Contact/Contact'
 import NotFound from './Components/NotFound/NotFound'
 
@@ -48,6 +49,7 @@ function App() {
           {!currentUser ? <Route exact path='/login' component={Login}></Route> : null } 
           {currentUser ? <Route exact path='/filActu' component={FilActu}></Route> : null} 
           {currentUser ? <Route exact path='/ajouterPost' component={AddPost}></Route> : null} 
+          {currentUser ? <Route  path='/ajouterCommentaire/:id' component={AddComment}></Route> : null} 
            <Route exact path='/contact' component={Contact}></Route>
            <Route   component={NotFound}></Route>
          </Switch>
