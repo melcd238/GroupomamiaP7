@@ -96,18 +96,18 @@ exports.getOneComment = (req, res ,next)=>{
 // Avoir tous les commentaires pour un message (id du post )
 exports.getAllComment = (req, res ,next)=>{
     const idPost = req.params.id
-    Comment.findAll({ where : { postId : idPost}}, 
-       {include: [{
-            model: User
-        }],
-        order: [[
-            "createdAt", "DESC"
-        ]]
+    Comment.findAll({
+        where : {postId : idPost},
+        order : [["createdAt", "DESC"]],
+        include :[
+            { model : User }
+        ]
     }).then( allComments=>{
-        return res.status(200).json({allComments})
+         return res.status(200).json({allComments})
     })
       .catch(error=>{
           console.log(error)
       })
+   
  }   
     

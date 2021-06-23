@@ -1,0 +1,21 @@
+.CardComment{
+    border: 1px solid #faf3e0;
+    border-radius: 3px;
+    margin: 10px 60px;
+}
+.CardCommentHeader{
+    background-color:#faf3e0;
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+}
+.CardCommentContent{
+    min-height: 100px;
+    
+}
+.CardCommentFooter{
+    background-color:#faf3e0;
+    display: flex;
+    justify-content: space-between;
+    height: 20px;
+}

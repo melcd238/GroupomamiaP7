@@ -6,13 +6,14 @@ import authHeader from '../../Services/AuthHeader';
 
 //Components
 import DisplayedPosts from '../../Components/DisplayedPosts/DisplayedPosts'
-import DisplayedComments from '../../Components/DisplayedComments/DisplayedComments'
+
 
 
 function FilActu (props){
 
     // State
     const [posts , setPosts] = useState([]);
+    
     
     // Fonctions
     const getAllPost = ()=>{
@@ -27,6 +28,7 @@ function FilActu (props){
             console.log(error)
         })
     }
+   
     //ComponentDidMount
     useEffect(()=>{
         getAllPost()
@@ -39,10 +41,10 @@ function FilActu (props){
     return(
         <div className={classes.container}>
         <h1>Fil d'actualité </h1>
+        
         <DisplayedPosts posts={posts}></DisplayedPosts>
 
-        <DisplayedComments posts={posts}></DisplayedComments>
-
+       
           
         </div>
     )
