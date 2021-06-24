@@ -52,7 +52,7 @@ const DeletePostHandler = (id) =>{
         <>
         <div className={classes.CardPost}>
             <div className={classes.CardPostHeader}>
-                <span style={{display:"block", fontStyle:"italic"}}>Publié par: {props.post.user.username}</span>
+                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> </span>
                 <h2 style={{margin:"0px"}}>{props.post.titre}</h2>
                 <span style={{display:"block", fontStyle:"italic"}}>
                     Publié le:{new Date(props.post.createdAt).toLocaleDateString("fr-FR") }<br/>

@@ -18,9 +18,9 @@ function AddComment (props){
                 placeholder: "Que voulez-vous répondre?"
                 
             },
-            value: '',
+            value: props.location.state && props.location.state.comment ? props.location.state.comment.content : '',
             label: 'Commentaire',
-            valid: false,
+            valid: props.location.state && props.location.state.comment ? true : false,
             validation:{
                 required: true,
                 minLength: 5,
@@ -32,7 +32,8 @@ function AddComment (props){
         
 
     })
-    const [valid, setValid] = useState(false)
+    const [valid, setValid] = useState(props.location.state && props.location.state.comment ? true : false)
+    console.log(props)
 
          //Fonctions :
    const checkValidity = (value , rules)=> {
@@ -74,6 +75,18 @@ const formHandler =(event)=>{
       
      
   }
+  if(props.location.state && props.location.state.comment){
+    axios.put('user/post/updateComment/' + props.location.state.comment.id ,newComment ,{ headers: authHeader() })
+    .then(response=>{
+        console.log(response)
+        props.history.replace('/filActu') 
+       // window.location.reload(); 
+    })
+    .catch(error =>{
+        console.log(error)
+    }) 
+
+  }else{
   axios.post('user/post/createComment/' + props.match.params.id ,newComment ,{ headers: authHeader() })
   .then(response=>{
       console.log(response)
@@ -84,7 +97,7 @@ const formHandler =(event)=>{
       console.log(error)
   })
 }
-
+ }
   // transformation de mon objet en tableau
   const formElementsArray = [];
   for(let key in inputs){
@@ -110,14 +123,21 @@ const formHandler =(event)=>{
            </Input>
       ))}
       
-     <input className={classes.inputSubmitAddComment} type="submit" value="Publier" disabled={!valid}/>
+     <input className={classes.inputSubmitAddComment} type="submit" 
+            value= {props.location.state && props.location.state.comment ? "Modifier" : "Publier"  }  
+            disabled={!valid}/>
   </form>
   )
     
 
   return(
       <div className={classes.container}>
-          <h1> Commenter ce post </h1>
+          {props.location.state && props.location.state.comment ?
+             <h1> Modifier ce post</h1>
+             :
+             <h1> Commenter ce post </h1>
+          }
+          
          {form}
       </div>
   )
