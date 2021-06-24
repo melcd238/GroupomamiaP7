@@ -1,10 +1,16 @@
 // Librairie
 import React from "react"
 import classes from '../CardComment/CardComment.module.css'
+import axios from '../../Services/AxiosApi';
+import authHeader from '../../Services/AuthHeader';
 
-// Composants
 
 
+//function
+const DeleteCommentClickHandler= (id)=>{
+    console.log(id)
+    console.log("supprimer comment")
+}
 
 function CardComment (props){
     return(
@@ -27,7 +33,9 @@ function CardComment (props){
                
                 <div>
                 <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
-                <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}></i>
+
+                <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
+                onClick={()=>DeleteCommentClickHandler(props.comment.id)}></i>
                 </div>
             </div>
          </div>

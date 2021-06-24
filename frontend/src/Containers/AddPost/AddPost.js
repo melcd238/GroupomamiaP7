@@ -18,9 +18,9 @@ function AddPost (props){
                 type:'text',
                 placeholder: "Titre du message"
             },
-            value: '',
+            value: props.location.state && props.location.state.post ? props.location.state.post.titre : "",
             label: 'Titre',
-            valid: false,
+            valid: props.location.state && props.location.state.post ? true : false,
             validation:{
                 required: true,
                 minLength: 3,
@@ -35,9 +35,9 @@ function AddPost (props){
                 placeholder: "Que voulez-vous partager?"
                 
             },
-            value: '',
+            value: props.location.state && props.location.state.post ? props.location.state.post.contenu: "",
             label: 'Contenu',
-            valid: false,
+            valid: props.location.state && props.location.state.post ? true : false,
             validation:{
                 required: true,
                 minLength: 5,
@@ -52,7 +52,7 @@ function AddPost (props){
                 type: 'file',
                 accept: ".png, .jpg, .jpeg, .gif"
             },
-            value: "",
+            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : null,
             label: 'Image',
             valid: true,
            
@@ -66,9 +66,8 @@ function AddPost (props){
         
 
     })
-    const [valid, setValid] = useState(false)
-    
-
+    const [valid, setValid] = useState(props.location.state && props.location.state.post ? true : false)
+    console.log(props)
 
       //Fonctions :
  const checkValidity = (value , rules)=> {
@@ -113,17 +112,30 @@ const formHandler =(event)=>{
         titre:inputs.titre.value,
         contenu:inputs.contenu.value,
         gifPost:inputs.gifPost.value
-       
+    } 
+    if(props.location.state && props.location.state.post){
+        axios.put('user/updatePost/' + props.location.state.post.id ,newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
+        .then(response=>{
+            console.log(response)
+            props.history.replace('/filActu') 
+           // window.location.reload(); 
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+
+    }else{
+        axios.post('user/createPost',newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
+        .then(response=>{
+            console.log(response)
+            props.history.replace('/filActu') 
+           // window.location.reload(); 
+        })
+        .catch(error =>{
+            console.log(error)
+        })
     }
-    axios.post('user/createPost',newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
-    .then(response=>{
-        console.log(response)
-        props.history.replace('/filActu') 
-       // window.location.reload(); 
-    })
-    .catch(error =>{
-        console.log(error)
-    })
+  
 }
 
     // transformation de mon objet en tableau
@@ -151,11 +163,21 @@ const formHandler =(event)=>{
              </Input>
         ))}
         
-       <input className={classes.inputSubmitAddMessage} type="submit" value="Publier" disabled={!valid}/>
+       <input className={classes.inputSubmitAddMessage} 
+              type="submit" 
+              value={props.location.state && props.location.state.post ? "Modifier" : "Publier"}
+              disabled={!valid}/>
     </form>
     )
     return(
         <div className={classes.container}>
+            {props.location.state && props.location.state.post ?
+             <h1> Modifier </h1>
+             :
+             <h1>   Publier  </h1>
+        }
+                  
+           
            {form}
         </div>
     )

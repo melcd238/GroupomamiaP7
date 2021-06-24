@@ -11,7 +11,7 @@ import Input from '../../Components/UI/Input'
 function AddComment (props){
     
     const [inputs, setInputs] = useState({
-      
+        
         content:{
             elementType: 'textarea',
             elementCongig:{

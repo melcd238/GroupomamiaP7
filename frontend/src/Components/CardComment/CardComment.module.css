@@ -7,10 +7,11 @@
     background-color:#faf3e0;
     display: flex;
     justify-content: space-between;
-    height: 36px;
+    min-height: 36px;
+    padding: 0px 8px;
 }
 .CardCommentContent{
-    min-height: 100px;
+    min-height: 80px;
     
 }
 .CardCommentFooter{

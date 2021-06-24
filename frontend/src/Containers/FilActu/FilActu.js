@@ -10,7 +10,7 @@ import DisplayedPosts from '../../Components/DisplayedPosts/DisplayedPosts'
 
 
 function FilActu (props){
-
+   
     // State
     const [posts , setPosts] = useState([]);
     

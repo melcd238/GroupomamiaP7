@@ -12,15 +12,29 @@ function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
      const [comments, setComments] = useState([]) 
-
+     const user = JSON.parse(localStorage.getItem('user'));
+ 
    //function
 const OpenCommentClickHandler = (id) =>{
         setDisplayComments(!displayComments)
 }
+const DeletePostHandler = (id) =>{
+    axios.delete('user/deletePost/' + id ,{ headers: authHeader() })
+    .then( response=>{
+        console.log(response)
+        window.location.reload(); 
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+}
 
 
- const GetAllComments = (id) =>{
-    axios.get('user/post/getAllComment/' + props.post.id ,{ headers: authHeader() })
+
+ 
+    // componantDidMount
+    useEffect(()=>{
+        axios.get('user/post/getAllComment/' + props.post.id ,{ headers: authHeader() })
     .then(response=>{
        
         const allComments=response.data.allComments
@@ -30,12 +44,8 @@ const OpenCommentClickHandler = (id) =>{
     .catch(error =>{
         console.log(error)
     })
- }
-    // componantDidMount
-    useEffect(()=>{
-        GetAllComments()
        
-    }, [])
+    }, [props.post.id])
  
 
     return(
@@ -66,14 +76,26 @@ const OpenCommentClickHandler = (id) =>{
                  onClick={()=>OpenCommentClickHandler(props.post.id)}            > <span>{props.post.nbrComment}</span> </i>
                 </div>
 
-                <Link  className={classes.btnCommenter} to={/ajouterCommentaire/ + props.post.id}>
+               
+               
+                <Link className={classes.btnCommenter} to={/ajouterCommentaire/ + props.post.id}>
                     <i className="fas fa-reply" style={{cursor:"pointer"}}><span style={{marginLeft:"5px"}}>Commenter</span> </i>
                 </Link>
 
+                {props.post && props.post.userId === user.id ?
                 <div>
-                <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
-                <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}></i>
+                   <Link className={classes.btnUpdate} to={{ pathname:'/ajouterPost',
+                                                           state:{post:props.post} }}>
+                    <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
+                 </Link> 
+                <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
+                 onClick={()=>DeletePostHandler(props.post.id)}></i>
                 </div>
+                :
+                null
+                }                 
+
+
             </div>
          </div>
            {props.post && props.post.nbrComment >= 1 && displayComments ?

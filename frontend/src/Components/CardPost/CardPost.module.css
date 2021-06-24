@@ -8,7 +8,8 @@
     background-color:#cfc5a5;
     display: flex;
     justify-content: space-between;
-    height: 36px;
+    min-height: 36px;
+    padding: 0px 8px;
 }
 .CardPostContent{
     min-height: 120px;
@@ -28,9 +29,14 @@
     text-decoration: none;
     color:inherit;
     padding: 0px 4px;
+    margin: 0px 5px;
     
     
 }
 .btnCommenter:hover{
     background-color: white;
+}
+.btnUpdate{
+    text-decoration: none;
+    color:inherit;
 }
