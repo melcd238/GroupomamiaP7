@@ -77,10 +77,36 @@ exports.deleteComment = (req ,res ,next)=>{
     const idComment = req.params.id
     const idUser = UserId(req)
     Comment.findOne({where : { id : idComment}})
-     // penser à decrementer le nbrComment dans Post 
+    .then(comment=>{
+        if(comment.userId != idUser){
+            return res.status(403).send({message : "Vous ne pouvez pas supprimer ce commentaire ce commentaire"})
+        }else{
+           Post.findOne({where : { id : comment.postId}})
+              .then( post =>{
+                if(!post){
+                    return res.status(400).json({message:"le post n'existe pas"})
+                }
+                post.update({nbrComment : post.nbrComment - 1}, {id : comment.postId}) 
+              })
+              .catch(error=>{
+                  console.log(error)
+              })
+           comment.destroy({where : { id : idComment}})
+               .then(()=>{
+                res.status(200).send({message: " le commentaire a été supprimé avec succés!"})
+               })
+               .catch(error=>{
+                res.status(400).json({message : "le commentaire n'a pas pu être supprimé!"})
+               })   
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+     
 
 } 
-// avoir un commentaire (id du comment)
+// avoir un commentaire (id du comment) // voir pour enlever cette route qui ne me sert pas. 
 exports.getOneComment = (req, res ,next)=>{
     const idComment = req.params.id;
     Comment. findOne({where : {id : idComment}})
