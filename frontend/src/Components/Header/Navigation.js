@@ -1,7 +1,8 @@
 //Librairie
-import React from 'react'
+import React , {useState} from 'react'
 import { withRouter } from 'react-router'
 import Styled from 'styled-components'
+import classes from '../Header/Navigation.module.css'
 
 
 // Composant
@@ -9,24 +10,7 @@ import NavigationItem from './NavigationItem'
 
 // Styled Components
 
-const UlComponent= Styled.ul`
-  list-style-type:none;
-  display:flex;
-  margin:0;
-  padding:0;
-  @media screen and (max-width:767px){
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    position:fixed;
-    right:-100vw;
-    bottom:0;
-    height:100vh;
-    padding:2rem;
-    background-color: #cfc5a5;
-    visibility: hidden;
-  }
-  `
+
 const ButtonComponent = Styled.button`
   background-color: #faf3e0;
   margin: 8px;
@@ -42,8 +26,15 @@ const ButtonComponent = Styled.button`
 
 
 function Navigation (props){
+   // State
+   const [showBurger, setShowBurger]=useState(false)
+
+   // Fonction
+   const BurgerClickHandler = ()=>{
+      setShowBurger(!showBurger)
+      console.log(showBurger)
+   }  
   
-    // Fonctions: 
     const LogoutClickedHandler = ()=>{
         console.log("déconnexion")
         localStorage.removeItem("user");
@@ -55,7 +46,8 @@ function Navigation (props){
 
 
     return(
-        <UlComponent>
+      <nav>
+        <ul className={classes.UlComponent}  >
           {!props.user ? <NavigationItem exact navLink="/home"> Home </NavigationItem> : null } 
           {props.user ? <NavigationItem exact navLink="/profil"> Profil </NavigationItem> : null}
           {props.user ? <NavigationItem navLink="/filActu"> Fil d'actualité </NavigationItem> : null}
@@ -65,8 +57,12 @@ function Navigation (props){
            {!props.user ? <NavigationItem exact navLink="/signUp"> SignUp </NavigationItem> : null}
            {!props.user ? <NavigationItem exact navLink="/login"> Login </NavigationItem> : null}
            {props.user ? <ButtonComponent onClick={LogoutClickedHandler}>Déconnexion</ButtonComponent> : null}
-
-        </UlComponent>
+        </ul>
+          <button className={classes.navbarBurger}
+          onClick={BurgerClickHandler}> 
+           <span className={classes.burgerBar}> </span>
+         </button>
+         </nav>  
     )
 }
 // on utilise withRouter pour pouvoir utiliser les props. 

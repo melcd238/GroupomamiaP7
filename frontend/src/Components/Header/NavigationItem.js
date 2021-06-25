@@ -6,6 +6,10 @@ import {NavLink} from 'react-router-dom'
 //Styled Components
 const LiComponents = Styled.li`
 margin: 10px 10px;
+@media screen and (max-width:767px){
+    margin: 5px -4px;
+    padding: 5px -5px; 
+}
 `
 
 

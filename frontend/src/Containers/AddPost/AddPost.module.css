@@ -1,10 +1,13 @@
+.container{
+    margin-top: 68px;
+}
 .AddMessage{
     background-color: #cfc5a5;
     width: 80%;
     max-width: 500px;
     height: 44vh;
     padding: 8px;
-    margin:  40px auto;
+    margin:  60px auto;
     border-radius: 10px;
 }
 .inputSubmitAddMessage{

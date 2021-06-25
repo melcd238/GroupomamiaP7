@@ -10,7 +10,7 @@ import Input from '../../Components/UI/Input'
 
 function AddPost (props){
     // States
-    const [ selectedFile, setSelectedFile] = useState(null)
+    
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -52,7 +52,7 @@ function AddPost (props){
                 type: 'file',
                 accept: ".png, .jpg, .jpeg, .gif"
             },
-            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : selectedFile,
+            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : null,
             label: 'Image',
             valid: true,
            
