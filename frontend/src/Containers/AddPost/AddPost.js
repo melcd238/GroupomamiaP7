@@ -10,7 +10,7 @@ import Input from '../../Components/UI/Input'
 
 function AddPost (props){
     // States
-
+    const [ selectedFile, setSelectedFile] = useState(null)
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -52,13 +52,13 @@ function AddPost (props){
                 type: 'file',
                 accept: ".png, .jpg, .jpeg, .gif"
             },
-            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : null,
+            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : selectedFile,
             label: 'Image',
             valid: true,
            
            validation:{
             required: false,
-            // fichier accepté passé dans la configuration 
+           
             
         }
         }
@@ -67,6 +67,7 @@ function AddPost (props){
 
     })
     const [valid, setValid] = useState(props.location.state && props.location.state.post ? true : false)
+   
     console.log(props)
 
       //Fonctions :
@@ -96,8 +97,8 @@ function AddPost (props){
     newInputs[id].value = event.target.value;
     newInputs[id].touched = true;
       // Verification de la valeur
-      newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation); 
-   
+      newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation);
+      
     setInputs(newInputs);
       // Verification du formulaire
     let formIsValid = true;

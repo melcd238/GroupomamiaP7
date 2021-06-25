@@ -14,6 +14,18 @@ const UlComponent= Styled.ul`
   display:flex;
   margin:0;
   padding:0;
+  @media screen and (max-width:767px){
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:fixed;
+    right:-100vw;
+    bottom:0;
+    height:100vh;
+    padding:2rem;
+    background-color: #cfc5a5;
+    visibility: hidden;
+  }
   `
 const ButtonComponent = Styled.button`
   background-color: #faf3e0;
@@ -53,6 +65,7 @@ function Navigation (props){
            {!props.user ? <NavigationItem exact navLink="/signUp"> SignUp </NavigationItem> : null}
            {!props.user ? <NavigationItem exact navLink="/login"> Login </NavigationItem> : null}
            {props.user ? <ButtonComponent onClick={LogoutClickedHandler}>Déconnexion</ButtonComponent> : null}
+
         </UlComponent>
     )
 }
