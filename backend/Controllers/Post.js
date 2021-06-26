@@ -14,7 +14,7 @@ exports.createPost=(req,res,next)=>{
             Post.create({
                 titre: req.body.titre,
                 contenu: req.body.contenu,
-                gifPost: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null, 
+                gifPost: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: "",  
                 userId : UserId(req),
                 likes: 0,
                 nbrComment: 0

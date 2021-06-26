@@ -17,6 +17,7 @@ db.sequelize.sync({ force: true }).then(() => {
   initial();
 });
  
+// Pour la phase de développement : 
   function initial() {
     Role.create({
       id: 1,

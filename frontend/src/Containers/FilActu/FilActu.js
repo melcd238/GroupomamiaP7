@@ -39,7 +39,7 @@ function FilActu (props){
     // On crée le composant DisplayedPosts auquel on passe une props posts auquel on passe notre State props 
   
     return(
-        <div className={classes.container}>
+        <div className={classes.containerFilActu}>
         <h1>Fil d'actualité </h1>
         
         <DisplayedPosts posts={posts}></DisplayedPosts>

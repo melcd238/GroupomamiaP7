@@ -10,7 +10,7 @@ import Input from '../../Components/UI/Input'
 
 function AddPost (props){
     // States
-    
+   // const [selectedFile, setSelectedFile] = useState("");
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -46,24 +46,6 @@ function AddPost (props){
             touched: false,
             errorMessage: "Le contenu doit faire entre 5 et 400 caractères"
         },
-        gifPost:{
-            elementType: 'input',
-            elementCongig:{
-                type: 'file',
-                accept: ".png, .jpg, .jpeg, .gif"
-            },
-            value: props.location.state && props.location.state.post ? props.location.state.post.gifPost : null,
-            label: 'Image',
-            valid: true,
-           
-           validation:{
-            required: false,
-           
-            
-        }
-        }
-
-        
 
     })
     const [valid, setValid] = useState(props.location.state && props.location.state.post ? true : false)
@@ -71,6 +53,9 @@ function AddPost (props){
     console.log(props)
 
       //Fonctions :
+
+ 
+ 
  const checkValidity = (value , rules)=> {
      let isValid = true;
       if(rules.required){
@@ -109,13 +94,16 @@ function AddPost (props){
 };
 const formHandler =(event)=>{
     event.preventDefault();
-    const newPost = {
-        titre:inputs.titre.value,
-        contenu:inputs.contenu.value,
-        gifPost:inputs.gifPost.value
-    } 
+    const formData = new FormData();
+    formData.append("titre",inputs.titre.value);
+    formData.append("contenu",inputs.contenu.value);
+    //formData.append("gifPost", selectedFile);
+    
+   
+       
+    
     if(props.location.state && props.location.state.post){
-        axios.put('user/updatePost/' + props.location.state.post.id ,newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
+        axios.put('user/updatePost/' + props.location.state.post.id ,formData,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
         .then(response=>{
             console.log(response)
             props.history.replace('/filActu') 
@@ -126,7 +114,7 @@ const formHandler =(event)=>{
         })
 
     }else{
-        axios.post('user/createPost',newPost ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
+        axios.post('user/createPost',formData ,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
         .then(response=>{
             console.log(response)
             props.history.replace('/filActu') 
@@ -163,7 +151,12 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
-        
+       <input type="file"
+              accept=".png, .jpg, .jpeg, .gif"
+              //defaultValue= {props.location.state && props.location.state.post ? props.location.state.post.gifPost : selectedFile}
+              //onChange= {(e)=>setSelectedFile(e.target.files[0])}
+              />
+
        <input className={classes.inputSubmitAddMessage} 
               type="submit" 
               value={props.location.state && props.location.state.post ? "Modifier" : "Publier"}

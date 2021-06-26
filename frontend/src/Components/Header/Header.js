@@ -17,6 +17,12 @@ const HeaderComponent = Styled.header`
   align-items: center;
   background-color:#cfc5a5;
   min-height : 40px;
+  @media screen and (max-width:767px){
+    flex-direction: column;
+    min-height : 30vh;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 

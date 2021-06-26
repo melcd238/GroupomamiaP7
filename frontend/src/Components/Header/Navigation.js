@@ -58,10 +58,6 @@ function Navigation (props){
            {!props.user ? <NavigationItem exact navLink="/login"> Login </NavigationItem> : null}
            {props.user ? <ButtonComponent onClick={LogoutClickedHandler}>Déconnexion</ButtonComponent> : null}
         </ul>
-          <button className={classes.navbarBurger}
-          onClick={BurgerClickHandler}> 
-           <span className={classes.burgerBar}> </span>
-         </button>
          </nav>  
     )
 }

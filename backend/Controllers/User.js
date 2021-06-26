@@ -104,4 +104,10 @@ exports.getOneUser = (req,res,next)=>{
         })
         .catch((error) => res.status(404).json({ error }))
 }
+// Supprimer un User
+
+// Modifier un utilisateur 
+
+
+// Voir tous les User 
 
