@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require('path');
 const cors = require("cors");
+const helmet = require('helmet');
 const app = express();
 
 const usersRoutes = require('./Routes/User')
@@ -33,12 +34,15 @@ db.sequelize.sync({ force: true }).then(() => {
  // origin: "http://localhost:3000"
 //};
 // pour les headers de mes requêtes ... voir plus tard pour modifier.CORS
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, x-access-token');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+app.use(helmet())
 //app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

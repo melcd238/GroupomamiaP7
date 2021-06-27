@@ -10,12 +10,13 @@ const UserId = require('../Services/GetUserId')
 
 // Creation d'un Post 
 exports.createPost=(req,res,next)=>{
+    const idUser = UserId(req)
     // Rajouter une condition pour qu'au moins le champs file et contenu soit rempli.
             Post.create({
                 titre: req.body.titre,
                 contenu: req.body.contenu,
                 gifPost: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null,  
-                userId : UserId(req),
+                userId : idUser,
                 likes: 0,
                 nbrComment: 0
             }).then(post=>{
