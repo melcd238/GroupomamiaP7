@@ -7,7 +7,7 @@ const UserId = require('../Services/GetUserId')
 
 
 
-// Création des Likes
+// Création des Likes ( Léger bug à corriger dans catch)
 exports.createLikePost = (req, res, next)=>{
     const idPost = req.params.id
     const idUser= UserId(req)
@@ -23,7 +23,7 @@ exports.createLikePost = (req, res, next)=>{
                       Like.create({
                         userId: idUser,
                         postId : idPost,
-                        like:liked
+                        likePost:liked
                       })
                       .then( like=>{
                           post.update({ likes: post.likes + 1})
