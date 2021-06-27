@@ -91,6 +91,7 @@ function Login (props){
                 localStorage.setItem("user", JSON.stringify(response.data));
                 
               }
+              
               props.history.push('/filActu') 
               window.location.reload(); 
             

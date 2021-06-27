@@ -1,5 +1,5 @@
 //Librairie
-import React , {useState} from 'react'
+import React from 'react'
 import { withRouter } from 'react-router'
 import Styled from 'styled-components'
 import classes from '../Header/Navigation.module.css'
@@ -26,14 +26,7 @@ const ButtonComponent = Styled.button`
 
 
 function Navigation (props){
-   // State
-   const [showBurger, setShowBurger]=useState(false)
-
-   // Fonction
-   const BurgerClickHandler = ()=>{
-      setShowBurger(!showBurger)
-      console.log(showBurger)
-   }  
+ 
   
     const LogoutClickedHandler = ()=>{
         console.log("déconnexion")

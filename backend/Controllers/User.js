@@ -2,12 +2,14 @@ const db = require("../Models");
 const config = require("../config/Auth.config");
 const User = db.user;
 const Role = db.role;
+const Profil = db.profil
 
 
 const Op = db.Sequelize.Op;
 
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
+const UserId = require('../Services/GetUserId')
 
 
 
@@ -104,10 +106,68 @@ exports.getOneUser = (req,res,next)=>{
         })
         .catch((error) => res.status(404).json({ error }))
 }
-// Supprimer un User
 
 // Modifier un utilisateur 
+exports.updateOneUser = (req, res, next)=>{
+    const idUser = req.params.id
+    const userId =UserId(req)
+    User.findOne({where : {id : idUser}})
+    .then(user=>{
+        if(user.id !== userId){
+            return res.status(400).json({message:"vous ne pouvez pas modifier ce User"})
+        }
+        user.update({username: req.body.username, email: req.body.email})
+        .then(()=>{
+            return res.status(200).json({message:"Paramètre User modifié avec succés"})
+        })
+        .catch(error=>{
+            console.log(error)
+            return res.status(400).json({message:"Les paramètres n'ont pas pu être modifié"})
+        })
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+
+
+}
+// Modifier le mot de passe d'un utilisateur 
+
+// Supprimer un User
+exports.deleteOneUser = (req, res, next)=>{
+    const idUser = req.params.id
+    const userId =UserId(req)
+    User.findOne({where : {id : idUser}})
+     .then(user=>{
+        if(user.id !== userId){
+            return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
+        }
+        user.destroy({where : {id: idUser}})
+           .then(()=>{
+               return res.status(200).json({message:"Le user a été supprimé avec succés"})
+           })
+           .catch(error=>{
+               console.log(error)
+               return res.status(400).json({message:"Le user n'a pas pus être détruit"})
+           })
+     })
+     .catch(error=>{
+         console.log(error)
+     })
+} 
 
 
 // Voir tous les User 
+exports.getAllUsers = (req, res, next)=>{
+    User.findAll({
+        include:[{model : Profil }]
+    })
+     .then( allUsers =>{
+         return res.status(200).json({allUsers})
+     })
+     .catch(error=>{
+         console.log(error)
+         return res.status(403).json({message : "impossible d'obtenir les Users!"})
+     })
+}
 

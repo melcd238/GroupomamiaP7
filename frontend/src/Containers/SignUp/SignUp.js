@@ -1,6 +1,7 @@
 // Librairie
 import React, { useState } from 'react'
 import classes from '../SignUp/SignUp.module.css'
+import  {   toast  }  from  'react-toastify' ; 
 import axios from '../../Services/AxiosApi'
 
 
@@ -111,7 +112,8 @@ function SignUp (props){
     axios.post('register', user)
     .then(response =>{
         console.log(response)
-        props.history.replace('/login') //props.match.params.id 
+        toast.info("Vous êtes bien enregistré!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
+        props.history.replace('/login') 
         
     })
     .catch(error => {

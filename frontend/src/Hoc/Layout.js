@@ -1,6 +1,8 @@
 //Librairie
 import React from 'react'
 import classes from '../Hoc/Layout.module.css'
+import  {  ToastContainer   }  from  'react-toastify' ;
+import  'react-toastify/dist/ReactToastify.css' ;
 
 //Composant
 import Header from '../Components/Header/Header'
@@ -15,6 +17,7 @@ function Layout (props){
         <div className={classes.content}>
         {props.children} 
         </div>
+        < ToastContainer  />
         <Footer/>
         </div>
     )

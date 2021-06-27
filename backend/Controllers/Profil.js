@@ -38,8 +38,3 @@ exports.getProfilUser = (req,res,next)=>{
 exports.updateProfilUser = (req,res,next)=>{
 
 }
-
-// suppression du user et de son profil
-exports.deleteUserProfilUser = (req, res, next)=>{
-
-}
