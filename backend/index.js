@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const path = require('path');
 const cors = require("cors");
 const app = express();
@@ -8,6 +7,7 @@ const usersRoutes = require('./Routes/User')
 const postRoutes = require('./Routes/Post')
 const profilRoutes = require('./Routes/Profil')
 const commentRoutes = require('./Routes/Comment')
+const likeRoutes = require('./Routes/Like')
 // Sequelize
 const db =require('./models/Index');
 const Role = db.role;
@@ -49,6 +49,7 @@ app.use('/api',usersRoutes);
 app.use('/api',postRoutes);
 app.use('/api',profilRoutes);
 app.use('/api',commentRoutes);
+app.use('/api', likeRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -107,7 +107,7 @@ exports.getOneUser = (req,res,next)=>{
         .catch((error) => res.status(404).json({ error }))
 }
 
-// Modifier un utilisateur 
+// Modifier un utilisateur (Rajouter la modification du password)
 exports.updateOneUser = (req, res, next)=>{
     const idUser = req.params.id
     const userId =UserId(req)
@@ -131,7 +131,7 @@ exports.updateOneUser = (req, res, next)=>{
 
 
 }
-// Modifier le mot de passe d'un utilisateur 
+
 
 // Supprimer un User
 exports.deleteOneUser = (req, res, next)=>{
