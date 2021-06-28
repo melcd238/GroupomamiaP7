@@ -44,9 +44,10 @@ function CardComment (props){
                           <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
                        </Link>    
                        
-       
+                       
                        <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
                        onClick={()=>DeleteCommentClickHandler(props.comment.id)}></i>
+                       
                        </div>
                   :
                   null     

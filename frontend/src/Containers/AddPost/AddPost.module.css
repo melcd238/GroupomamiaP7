@@ -29,3 +29,6 @@
     font-weight: bolder;
     padding: 10px;
 }
+.imagePreview{
+    border: 1px solid black;
+}

@@ -82,18 +82,23 @@ const DeletePostHandler = (id) =>{
                     <i className="fas fa-reply" style={{cursor:"pointer"}}><span style={{marginLeft:"5px"}}>Commenter</span> </i>
                 </Link>
 
-                {props.post && props.post.userId === user.id ?
+                
                 <div>
+                    {props.post && props.post.userId === user.id ?
                    <Link className={classes.btnUpdate} to={{ pathname:'/ajouterPost',
                                                            state:{post:props.post} }}>
                     <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
                  </Link> 
+                 : null}
+
+                {user.roles[1] === "ROLE_ADMIN"  || props.post && props.post.userId === user.id? 
                 <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
                  onClick={()=>DeletePostHandler(props.post.id)}></i>
+                 : null
+                }
                 </div>
-                :
-                null
-                }                 
+                
+                               
 
 
             </div>

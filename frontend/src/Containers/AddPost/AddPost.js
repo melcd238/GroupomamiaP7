@@ -1,5 +1,5 @@
 // Librairie
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import classes from '../AddPost/AddPost.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
@@ -7,7 +7,8 @@ import authHeader from '../../Services/AuthHeader';
 import Input from '../../Components/UI/Input'
 function AddPost (props){
     // States
-    const [image , setImage] = useState(null)
+   const [selectedFile , setSelectedFile] = useState(null)
+    const [previewUrl, setPreviewUrl]= useState()
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -48,9 +49,9 @@ function AddPost (props){
             elementCongig:{
                 type:"file",
                 accept:".png, .jpg, .jpeg, .gif",
-                name:"image"
+                name:"file"
              },
-             value: props.location.state && props.location.state.post ? props.location.state.post.imageUrl : image,
+             defaultValue: props.location.state && props.location.state.post ? props.location.state.post.imageUrl : selectedFile,
              label:'Image/GIF',
              valid: props.location.state && props.location.state.post ? false : true,
              validation:{
@@ -89,17 +90,13 @@ function AddPost (props){
   const inputChangedHandler = (event, id) =>{
       // Change la valeur
         const newInputs = {...inputs};
-        if(event.target.files){
-        newInputs[id].value =event.target.files[0]
-        setImage(newInputs[id].image) 
-        console.log(newInputs[id].image)
-        }
-        else{
-    newInputs[id].value = event.target.value;
+    newInputs[id].defaultValue = event.target.files[0]
+    setSelectedFile(event.target.files[0])  
+    newInputs[id].value = event.target.value
     newInputs[id].touched = true;
       // Verification de la valeur
       newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation);
-    }
+   
     setInputs(newInputs);
       // Verification du formulaire
     let formIsValid = true;
@@ -108,6 +105,17 @@ function AddPost (props){
     } 
     setValid(formIsValid) 
 };
+useEffect(()=>{
+    if(selectedFile){
+                 const selectedFileReader = new FileReader()
+                 selectedFileReader.onload = ()=>{
+                   setPreviewUrl(selectedFileReader.result)
+                 }
+                 selectedFileReader.readAsDataURL(selectedFileReader)
+   }else{
+          return
+    }
+  },[selectedFile])
 
 
 
@@ -116,7 +124,7 @@ const formHandler =(event)=>{
     const formData = new FormData();
     formData.append("titre",inputs.titre.value);
     formData.append("contenu",inputs.contenu.value);
-    formData.append("image", inputs.imageUrl.value );
+    //formData.append("image", inputs.imageUrl.value );
 
        
     
@@ -160,6 +168,7 @@ const formHandler =(event)=>{
              key={formElement.id}
              id= {formElement.id}
              value={formElement.config.value}
+             defaultValue={formElement.config.value}
              label={formElement.config.label}
              type={formElement.config.elementType}
              config={formElement.config.elementCongig}
@@ -169,6 +178,12 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
+          { previewUrl &&
+              <div className="image-preview">
+                 <img src={previewUrl} alt=""/>
+              </div>
+          }
+            
 
 
        <input className={classes.inputSubmitAddMessage} 
