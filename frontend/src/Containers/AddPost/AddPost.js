@@ -1,16 +1,13 @@
 // Librairie
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import classes from '../AddPost/AddPost.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
-
 //Components
 import Input from '../../Components/UI/Input'
-
-
 function AddPost (props){
     // States
-  
+    const [image , setImage] = useState(null)
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -46,6 +43,20 @@ function AddPost (props){
             touched: false,
             errorMessage: "Le contenu doit faire entre 5 et 400 caractères"
         },
+        imageUrl:{
+            elementType: 'input',
+            elementCongig:{
+                type:"file",
+                accept:".png, .jpg, .jpeg, .gif",
+                name:"image"
+             },
+             value: props.location.state && props.location.state.post ? props.location.state.post.imageUrl : image,
+             label:'Image/GIF',
+             valid: props.location.state && props.location.state.post ? false : true,
+             validation:{
+                 required:false
+             }
+        }
 
     })
     const [valid, setValid] = useState(props.location.state && props.location.state.post ? true : false)
@@ -77,12 +88,18 @@ function AddPost (props){
 
   const inputChangedHandler = (event, id) =>{
       // Change la valeur
-    const newInputs = {...inputs};
+        const newInputs = {...inputs};
+        if(event.target.files){
+        newInputs[id].value =event.target.files[0]
+        setImage(newInputs[id].image) 
+        console.log(newInputs[id].image)
+        }
+        else{
     newInputs[id].value = event.target.value;
     newInputs[id].touched = true;
       // Verification de la valeur
       newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation);
-      
+    }
     setInputs(newInputs);
       // Verification du formulaire
     let formIsValid = true;
@@ -91,18 +108,7 @@ function AddPost (props){
     } 
     setValid(formIsValid) 
 };
-    // Pour l'Image:
-// state:
-const[image, setImage]=useState(null)
-const imageHandler = (event)=>{
-    if(event.target.file){
-        const pickedImage = event.target.files[0]
-        setImage(pickedImage)
-        console.log( pickedImage )
-    }else{
-        return 
-    }
-}
+
 
 
 const formHandler =(event)=>{
@@ -110,7 +116,7 @@ const formHandler =(event)=>{
     const formData = new FormData();
     formData.append("titre",inputs.titre.value);
     formData.append("contenu",inputs.contenu.value);
-    formData.append("image", setImage);
+    formData.append("image", inputs.imageUrl.value );
 
        
     
@@ -163,17 +169,7 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
-        <div>
 
-       <label htmlFor="image"> Image/GIF </label>
-       <input type="file"
-              name='image'
-              id="image"
-              accept=".png, .jpg, .jpeg, .gif"
-              value= {props.location.state && props.location.state.post ? props.location.state.post.imageUrl : image}
-              onChange= {imageHandler}
-              />
-        </div>
 
        <input className={classes.inputSubmitAddMessage} 
               type="submit" 
