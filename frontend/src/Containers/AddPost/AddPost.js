@@ -1,5 +1,5 @@
 // Librairie
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from '../AddPost/AddPost.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
@@ -10,7 +10,7 @@ import Input from '../../Components/UI/Input'
 
 function AddPost (props){
     // States
-   // const [selectedFile, setSelectedFile] = useState("");
+  
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -49,10 +49,9 @@ function AddPost (props){
 
     })
     const [valid, setValid] = useState(props.location.state && props.location.state.post ? true : false)
-   
-    console.log(props)
+   console.log(props)
 
-      //Fonctions :
+    //Fonctions :
 
  
  
@@ -92,14 +91,27 @@ function AddPost (props){
     } 
     setValid(formIsValid) 
 };
+    // Pour l'Image:
+// state:
+const[image, setImage]=useState(null)
+const imageHandler = (event)=>{
+    if(event.target.file){
+        const pickedImage = event.target.files[0]
+        setImage(pickedImage)
+        console.log( pickedImage )
+    }else{
+        return 
+    }
+}
+
+
 const formHandler =(event)=>{
     event.preventDefault();
     const formData = new FormData();
     formData.append("titre",inputs.titre.value);
     formData.append("contenu",inputs.contenu.value);
-    //formData.append("gifPost", selectedFile);
-    
-   
+    formData.append("image", setImage);
+
        
     
     if(props.location.state && props.location.state.post){
@@ -107,7 +119,7 @@ const formHandler =(event)=>{
         .then(response=>{
             console.log(response)
             props.history.replace('/filActu') 
-           // window.location.reload(); 
+            
         })
         .catch(error =>{
             console.log(error)
@@ -151,11 +163,17 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
+        <div>
+
+       <label htmlFor="image"> Image/GIF </label>
        <input type="file"
+              name='image'
+              id="image"
               accept=".png, .jpg, .jpeg, .gif"
-              //defaultValue= {props.location.state && props.location.state.post ? props.location.state.post.gifPost : selectedFile}
-              //onChange= {(e)=>setSelectedFile(e.target.files[0])}
+              value= {props.location.state && props.location.state.post ? props.location.state.post.imageUrl : image}
+              onChange= {imageHandler}
               />
+        </div>
 
        <input className={classes.inputSubmitAddMessage} 
               type="submit" 

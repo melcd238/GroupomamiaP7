@@ -15,7 +15,7 @@ exports.createPost=(req,res,next)=>{
             Post.create({
                 titre: req.body.titre,
                 contenu: req.body.contenu,
-                gifPost: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null,  
+                imageUrl: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null,  
                 userId : idUser,
                 likes: 0,
                 nbrComment: 0
@@ -42,8 +42,8 @@ exports.updatePost=(req,res,next)=>{
               } 
               if(post.userId ===  UserId(req)){
                 if (req.file){
-                    if (post.gifPost !== null){
-                        const fileName = post.gifPost.split('/upload/')[1];
+                    if (post.imageUrl !== null){
+                        const fileName = post.imageUrl.split('/upload/')[1];
                         fs.unlink(`upload/${fileName}`, (err => {
                             if (err) console.log(err);
                             else {
@@ -51,7 +51,7 @@ exports.updatePost=(req,res,next)=>{
                             }
                         }));
                     }
-                    req.body.gifPost = `${req.protocol}://${req.get('host')}/upload/${req.file.filename}`;
+                    req.body.imageUrl = `${req.protocol}://${req.get('host')}/upload/${req.file.filename}`;
                   }
                   post.update( { ...req.body, id: req.params.id} )
                   .then((newPost)=>{
@@ -80,8 +80,8 @@ exports.deletePost = (req, res, next)=>{
     Post.findOne({where : {id: id}})
              .then( post =>{
                 if(post.userId === UserId(req)){
-                    if (post.gifPost !== null){
-                        const fileName = post.gifPost.split('/upload/')[1];
+                    if (post.imageUrl !== null){
+                        const fileName = post.imageUrl.split('/upload/')[1];
                         fs.unlink(`upload/${fileName}`, (err => {
                             if (err) console.log(err);
                             else {

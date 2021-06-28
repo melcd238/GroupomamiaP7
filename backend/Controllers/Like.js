@@ -25,7 +25,7 @@ exports.createLikePost = (req, res, next)=>{
                         postId : idPost,
                         likePost:liked
                       })
-                      .then( like=>{
+                      .then( like=>{ 
                           post.update({ likes: post.likes + 1})
                           .then(post=>{
                               return res.status(201).json({post})
@@ -35,8 +35,8 @@ exports.createLikePost = (req, res, next)=>{
                               return res.status(403).json({message:"Le post n'a pas pu être modifié"})
                           })
                       })
-                      .catch(error=>{
-                          console.log(error)
+             .catch(error=>{
+                 console.log(error)
                       })
                   }else if(like){
                       post.update({likes : post.likes -1})
@@ -49,12 +49,13 @@ exports.createLikePost = (req, res, next)=>{
                         return res.status(403).json({message:"Le post n'a pas pu être modifié"})
                     })
                     Like.destroy({where :{userId: idUser, postId : idPost}})
-                         .then(()=>{
-                            return res.status(201).json({post})
-                         })
-                         .catch((error)=>{
-                             console.log(error)
-                         })
+                    .then(()=>{
+                       return res.status(201).json({post})
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                  
                   }
               })
         

@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize)=>{
         contenu: {
             type: Sequelize.STRING,
                 },
-        gifPost :{
+        imageUrl :{
             type: Sequelize.STRING,
             
           },

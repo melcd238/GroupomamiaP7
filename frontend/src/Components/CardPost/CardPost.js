@@ -62,8 +62,8 @@ const DeletePostHandler = (id) =>{
             <div className={classes.CardPostContent}>
                  <p>{props.post.contenu} </p>
 
-                {props.post.gifPost === "" ? null :
-                 <img src={props.post.gifPost} alt="téléchargée par le user" style={{width:"140px", height:"140px"}}></img> }
+                {props.post.imageUrl === null ? null :
+                 <img src={props.post.imageUrl} alt="téléchargée par le user" style={{width:"140px", height:"140px"}}></img> }
                 
                  
             </div>
