@@ -13,5 +13,8 @@ router.put('/auth/user/updatePost/:id',[authJwt.verifyToken], Multer,postCTRL.up
 router.delete('/auth/user/deletePost/:id',[authJwt.verifyToken], Multer,postCTRL.deletePost);
 router.get('/auth/user/getOnePost/:id',[authJwt.verifyToken], Multer, postCTRL.getOnePost);
 
+// Pour l'admin Suppresion d'un Post 
+router.delete('/auth/user/admin/deletePost/:id',[authJwt.verifyToken, authJwt.isAdmin], Multer,postCTRL.adminDeletePost);
+
 
 module.exports = router;

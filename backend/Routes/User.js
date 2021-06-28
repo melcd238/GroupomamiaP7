@@ -15,7 +15,9 @@ router.get('/auth/user/getAllUsers',[authJwt.verifyToken], userCtrl.getAllUsers)
 
 
 
-//[authJWT.verifyToken]
+// Route pour l'admin
+router.delete('/auth/user/admin/deleteOneUser/:id',[authJwt.verifyToken, authJwt.isAdmin],userCtrl.adminDeleteOneUser)
+
 
 
 

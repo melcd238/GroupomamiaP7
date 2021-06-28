@@ -95,7 +95,7 @@ exports.deletePost = (req, res, next)=>{
                         return res.status(200).json({ message}) 
                     })
                     .catch(error=>{
-                        const message = "le post n'a pas pu être modifié"
+                        const message = "le post n'a pas pu être supprimé"
                         return res.status(400).json({ error: message})
                     })
   
@@ -108,6 +108,35 @@ exports.deletePost = (req, res, next)=>{
                  console.log(error)
              })
              
+}
+// Supprimer un post pour l'administrateur:
+exports.adminDeletePost = (req, res, next)=>{
+    const id = req.params.id;
+    Post.findOne({where : {id: id}})
+      .then(post=>{
+        if (post.imageUrl !== null){
+            const fileName = post.imageUrl.split('/upload/')[1];
+            fs.unlink(`upload/${fileName}`, (err => {
+                if (err) console.log(err);
+                else {
+                    console.log("Image supprimée: " + fileName);
+                }
+            }));
+        }
+        Post.destroy({where : {id : id}})
+        .then(()=>{
+            const message = 'Le post a bien été supprimé'
+            return res.status(200).json({ message}) 
+        })
+        .catch(error=>{
+            const message = "le post n'a pas pu être supprimé"
+            return res.status(400).json({ error: message})
+        })
+
+      })
+      .catch(error=>{
+          console.log(error)
+      })
 }
 // Voir 1 Post
 

@@ -156,6 +156,26 @@ exports.deleteOneUser = (req, res, next)=>{
      })
 } 
 
+// Pour l'Admin : supprimer un user
+exports.adminDeleteOneUser = (req, res, next)=>{
+    const idUser = req.params.id
+    User.findOne({where  : {id: idUser}})
+       .then(user=>{
+           user.destroy({where  : {id: idUser}})
+           .then(()=>{
+            return res.status(200).json({message:"Le user a été supprimé avec succés"})
+        })
+        .catch(error=>{
+            console.log(error)
+            return res.status(400).json({message:"Le user n'a pas pus être détruit"})
+        })
+       })
+       .catch(error=>{
+           console.log(error)
+       })
+
+}
+
 
 // Voir tous les User 
 exports.getAllUsers = (req, res, next)=>{

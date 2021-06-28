@@ -106,6 +106,34 @@ exports.deleteComment = (req ,res ,next)=>{
      
 
 } 
+// Suppression d'un commentaire pour l'administrateur
+exports.adminDeleteComment = (req, res, next)=>{
+    const idComment = req.params.id
+    Comment.findOne({where : { id : idComment}})
+      .then( comment=>{
+        Post.findOne({where : { id : comment.postId}})
+        .then( post =>{
+          if(!post){
+              return res.status(400).json({message:"le post n'existe pas"})
+          }
+          post.update({nbrComment : post.nbrComment - 1}, {id : comment.postId}) 
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+     comment.destroy({where : { id : idComment}})
+         .then(()=>{
+          res.status(200).send({message: " le commentaire a été supprimé avec succés!"})
+         })
+         .catch(error=>{
+          res.status(400).json({message : "le commentaire n'a pas pu être supprimé!"})
+         })   
+
+      })
+      .catch(error=>{
+          console.log(error)
+      })
+}
 // avoir un commentaire (id du comment) // voir pour enlever cette route qui ne me sert pas. 
 exports.getOneComment = (req, res ,next)=>{
     const idComment = req.params.id;
