@@ -26,6 +26,15 @@ function CardUser (props){
         <div className={classes.CardUserContainer}>
             <div className={classes.usercontainer}>
                <p> User: <strong>{props.user.username}</strong></p>
+
+               <p style={{margin:"2px"}}> Role(s): </p>
+                 <ul style={{margin: "0", padding:"0",listStyleType:"none"}}>
+                 
+                 </ul>
+                  
+                  
+                   
+                
                <p> User crée le : <strong>{new Date(props.user.createdAt).toLocaleDateString("fr-FR") } </strong> </p>
             </div>
             <div className={classes.profilContainer}>
@@ -43,7 +52,7 @@ function CardUser (props){
              <p>Bio non renseignée </p>
                 }
             </div>
-            {user.roles[1] === "ROLE_ADMIN" ?
+            {user.roles[1] === "admin" ?
             <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
             onClick={()=>DeleteUserClickHandler(props.user.id)}></i>
             : null

@@ -9,11 +9,12 @@ const postRoutes = require('./Routes/Post')
 const profilRoutes = require('./Routes/Profil')
 const commentRoutes = require('./Routes/Comment')
 const likeRoutes = require('./Routes/Like')
+const rolesRoutes = require('./Routes/Roles')
 // Sequelize
 const db =require('./models/Index');
 const Role = db.role;
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({force: true}).then(() => {
   console.log('Synchronise');
   initial();
 });
@@ -54,6 +55,7 @@ app.use('/api',postRoutes);
 app.use('/api',profilRoutes);
 app.use('/api',commentRoutes);
 app.use('/api', likeRoutes);
+app.use('/api',rolesRoutes)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

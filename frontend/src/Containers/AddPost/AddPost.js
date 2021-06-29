@@ -90,8 +90,7 @@ function AddPost (props){
   const inputChangedHandler = (event, id) =>{
       // Change la valeur
         const newInputs = {...inputs};
-    newInputs[id].defaultValue = event.target.files[0]
-    setSelectedFile(event.target.files[0])  
+     
     newInputs[id].value = event.target.value
     newInputs[id].touched = true;
       // Verification de la valeur
@@ -105,17 +104,7 @@ function AddPost (props){
     } 
     setValid(formIsValid) 
 };
-useEffect(()=>{
-    if(selectedFile){
-                 const selectedFileReader = new FileReader()
-                 selectedFileReader.onload = ()=>{
-                   setPreviewUrl(selectedFileReader.result)
-                 }
-                 selectedFileReader.readAsDataURL(selectedFileReader)
-   }else{
-          return
-    }
-  },[selectedFile])
+
 
 
 
@@ -178,11 +167,7 @@ const formHandler =(event)=>{
              changed={(e)=>inputChangedHandler(e, formElement.id)}>
              </Input>
         ))}
-          { previewUrl &&
-              <div className="image-preview">
-                 <img src={previewUrl} alt=""/>
-              </div>
-          }
+         
             
 
 

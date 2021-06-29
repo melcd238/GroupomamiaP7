@@ -112,7 +112,7 @@ exports.deletePost = (req, res, next)=>{
 // Supprimer un post pour l'administrateur:
 exports.adminDeletePost = (req, res, next)=>{
     const id = req.params.id;
-    Post.findOne({where : {id: id}})
+    Post.findOne({where : {id: id}, include:[{model : Comment}]})
       .then(post=>{
         if (post.imageUrl !== null){
             const fileName = post.imageUrl.split('/upload/')[1];

@@ -80,7 +80,7 @@ exports.login = (req,res,next)=>{
         user.getRoles()
         .then((roles)=>{
             for(let i =0; i<roles.length; i++){
-                authorities.push("ROLE_" + roles[i].name.toUpperCase())
+                authorities.push(roles[i].name)
             }
             return res.status(200).json({
                 id: user.id,
@@ -105,7 +105,7 @@ exports.getOneUser = (req,res,next)=>{
     User.findOne({ where: { id: idUser },
                    include : [{
                        model : Profil
-                   },{model : Post}]})
+                   },{model : Post}, {model : Role}]})
         .then(user=>{
             return res.status(200).json({user})
         })
@@ -164,7 +164,8 @@ exports.deleteOneUser = (req, res, next)=>{
 // Pour l'Admin : supprimer un user
 exports.adminDeleteOneUser = (req, res, next)=>{
     const idUser = req.params.id
-    User.findOne({where  : {id: idUser}})
+    User.findOne({where  : {id: idUser},
+        include : [ {model : Role}]})
        .then(user=>{
            user.destroy({where  : {id: idUser}})
            .then(()=>{
@@ -185,7 +186,7 @@ exports.adminDeleteOneUser = (req, res, next)=>{
 // Voir tous les User 
 exports.getAllUsers = (req, res, next)=>{
     User.findAll({
-        include:[{model : Profil }]
+        include:[{model : Profil },{model: Role}]
     })
      .then( allUsers =>{
          return res.status(200).json({allUsers})

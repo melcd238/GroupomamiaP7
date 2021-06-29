@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/Auth.config');
 const db = require('../Models');
 const User = db.user;
+const UserId = require('../Services/GetUserId')
 
 // on verifie qu'il y a un token 
 verifyToken = (req,res,next)=>{
@@ -39,7 +40,8 @@ verifyToken = (req,res,next)=>{
 
 
 isAdmin = (req, res, next) => {
-    User.findOne(req.userId)
+  const idUser = UserId(req)
+    User.findOne({where: {id:idUser}})
     .then(user => {
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {

@@ -19,6 +19,17 @@ const DeleteCommentClickHandler= (id)=>{
         console.log(error)
     })
 }
+const AdminDeleteCommentHandler = (id)=>{
+    axios.delete('user/post/admin/deleteComment/' + id,{ headers: authHeader() } )
+    .then(response=>{
+        console.log(response)
+        window.location.reload(); 
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+
+}
 
 function CardComment (props){
     return(
@@ -51,6 +62,12 @@ function CardComment (props){
                        </div>
                   :
                   null     
+                }
+                {user.roles[1] === "admin" ?
+                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
+                   onClick={()=>AdminDeleteCommentHandler(props.post.id)}></i> 
+                  :
+                  null
                 }
                
                

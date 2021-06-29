@@ -30,7 +30,7 @@ const DeletePostHandler = (id) =>{
     })
 }
 const LikePostHandler = (id) =>{
-    axios.post('user/post/createLike/' + id ,{ headers: authHeader() })
+    axios.post('user/post/createLike/' + id )
         .then(response=>{
             console.log(response)
             window.location.reload(); 
@@ -38,6 +38,16 @@ const LikePostHandler = (id) =>{
         .catch(error=>{
             console.log(error)
         })
+}
+const AdminDeletePostHandler = (id)=>{
+    axios.delete('user/admin/deletePost/' + id , { headers: authHeader() } )
+    .then( response=>{
+        console.log(response)
+        window.location.reload(); 
+    })
+    .catch(error=>{
+        console.log(error)
+    })
 }
 
 
@@ -104,6 +114,12 @@ const LikePostHandler = (id) =>{
                  onClick={()=>DeletePostHandler(props.post.id)}></i>
                 </div>
                  : null
+                }
+                {user.roles[1] === "admin" ?
+                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
+                   onClick={()=>AdminDeletePostHandler(props.post.id)}></i> 
+                  :
+                  null
                 }
                 
                                
