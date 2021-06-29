@@ -21,3 +21,11 @@
     width: 50%;
     background-color: white;
 }
+.avatar{
+    border-radius: 50%;
+    border: 3px solid #cfc5a5;
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+
+}

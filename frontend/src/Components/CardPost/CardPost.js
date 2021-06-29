@@ -11,7 +11,8 @@ import DisplayedComments from '../DisplayedComments/DisplayedComments'
 function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
-     const [comments, setComments] = useState([]) 
+     const [comments, setComments] = useState([])
+     const [likes, setLikes] = useState()
      const user = JSON.parse(localStorage.getItem('user'));
  
    //function
@@ -27,6 +28,16 @@ const DeletePostHandler = (id) =>{
     .catch(error=>{
         console.log(error)
     })
+}
+const LikePostHandler = (id) =>{
+    axios.post('user/post/createLike/' + id ,{ headers: authHeader() })
+        .then(response=>{
+            console.log(response)
+            window.location.reload(); 
+        })
+        .catch(error=>{
+            console.log(error)
+        })
 }
 
 
@@ -70,7 +81,8 @@ const DeletePostHandler = (id) =>{
 
             <div className={classes.CardPostFooter}>
                 <div>
-                <i className="far fa-thumbs-up" style={{margin:"0px 20px",cursor:"pointer"}}></i>
+                <i className="far fa-thumbs-up" style={{margin:"0px 20px",cursor:"pointer"}}
+                   onClick={()=>LikePostHandler(props.post.id)}> <span>{props.post.likes}</span> </i>
 
                <i className="far fa-comments" style={{margin:"0px 20px",cursor:"pointer"}}
                  onClick={()=>OpenCommentClickHandler(props.post.id)}            > <span>{props.post.nbrComment}</span> </i>
@@ -82,21 +94,17 @@ const DeletePostHandler = (id) =>{
                     <i className="fas fa-reply" style={{cursor:"pointer"}}><span style={{marginLeft:"5px"}}>Commenter</span> </i>
                 </Link>
 
-                
+                {props.post && props.post.userId === user.id ?
                 <div>
-                    {props.post && props.post.userId === user.id ?
                    <Link className={classes.btnUpdate} to={{ pathname:'/ajouterPost',
                                                            state:{post:props.post} }}>
                     <i className="fas fa-edit" style={{margin:"0px 20px",cursor:"pointer"}}></i>
-                 </Link> 
-                 : null}
-
-                {user.roles[1] === "ROLE_ADMIN"  || props.post && props.post.userId === user.id? 
+                 </Link>  
                 <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
                  onClick={()=>DeletePostHandler(props.post.id)}></i>
+                </div>
                  : null
                 }
-                </div>
                 
                                
 

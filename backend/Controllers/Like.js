@@ -7,66 +7,67 @@ const UserId = require('../Services/GetUserId')
 
 
 
-// Création des Likes ( Léger bug à corriger dans catch)
+// Création des Likes 
 exports.createLikePost = (req, res, next)=>{
     const idPost = req.params.id
     const idUser= UserId(req)
-    let liked = req.body.like
     Post.findOne({where : {id:idPost}})
-       .then(post=>{
-           if(!post){
-               return res.status(400).json({message:"Le post n'existe pas!"})
-           }
-           Like.findOne({where :{userId: idUser, postId : idPost}}) 
-              .then(like=>{
-                  if(!like){
-                      Like.create({
-                        userId: idUser,
-                        postId : idPost,
-                        likePost:liked
-                      })
-                      .then( like=>{ 
-                          post.update({ likes: post.likes + 1})
-                          .then(post=>{
-                              return res.status(201).json({post})
-                          })
-                          .catch(error=>{
-                              console.log(error)
-                              return res.status(403).json({message:"Le post n'a pas pu être modifié"})
-                          })
-                      })
-             .catch(error=>{
-                 console.log(error)
-                      })
-                  }else if(like){
-                      post.update({likes : post.likes -1})
-                      .then(post=>{
-                        return res.status(201).json({post})
-                          
-                      })
-                      .catch(error=>{
-                        console.log(error)
-                        return res.status(403).json({message:"Le post n'a pas pu être modifié"})
-                    })
-                    Like.destroy({where :{userId: idUser, postId : idPost}})
-                    .then(()=>{
-                       return res.status(201).json({post})
-                    })
-                    .catch((error)=>{
-                        console.log(error)
-                    })
-                  
-                  }
-              })
-        
-       })
-       .catch(error=>{
-           console.log(error)
-       })
+        .then( post=>{
+            if(!post){
+                return res.status(400).json({message:"Le post n'existe pas!"})
+            } else{
+                Like.findOne({where :{userId: idUser, postId : idPost}})
+                   .then( like=>{
+                       if(!like){
+                        Like.create({
+                            userId: idUser,
+                            postId : idPost,
+                            likePost: 1})
+                            .then( ()=>{
+                                post.update({ likes: post.likes + 1})
+                                  .then(post=>{
+                                    return res.status(201).json({post})
+                                  })
+                                  .catch(error=>{
+                                    console.log(error)
+                                    return res.status(400).json({message:"Le post ne peut pas être update!"})
+                                  })
+                            })
+                            .catch(error=>{
+                                console.log(error)
+                                return res.status(400).json({message:"impossible de créer le like!"})
+                            })
 
-       
-}        
+                       }else if(like){
+                           post.update({likes : post.likes -1})
+                              .then( post=>{
+                                   like.destroy({where :{userId: idUser, postId : idPost}})
+                                       .then( ()=>{
+                                        return res.status(201).json({post})
+                                       })
+                                       .catch(error=>{
+                                        console.log(error)
+                                        return res.status(400).json({message:"Le like ne peut pas être détruit!"})
+                                       })
+                              })
+                              .catch(error=>{
+                                console.log(error)
+                                return res.status(400).json({message:"Le post ne peut pas être update!"})
+                              })
+                       }
+                   })
+                   .catch(error=>{
+                       console.log(error)
+                   })  
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+        })
 
+
+
+}  
 // Obtenir les likes pour un Post et les utilisateurs qui ont liké
 exports.getLikesPost = (req, res, next)=>{
     const idPost = req.params.id 

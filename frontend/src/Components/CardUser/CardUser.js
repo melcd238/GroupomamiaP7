@@ -4,6 +4,8 @@ import classes from '../CardUser/CardUser.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
 
+//Composant
+import profilAvatar from '../../Images/profilAvatar.svg'
 
 //function
 const user = JSON.parse(localStorage.getItem('user'));
@@ -27,7 +29,19 @@ function CardUser (props){
                <p> User crée le : <strong>{new Date(props.user.createdAt).toLocaleDateString("fr-FR") } </strong> </p>
             </div>
             <div className={classes.profilContainer}>
-             Profil
+                <div>
+                    { props.user.profil && props.user.profil.avatar ?
+                    <img src={props.user.profil.avatar} alt="avatar"
+                    className={classes.avatar}></img>
+                    :
+                    <img src={profilAvatar} alt="avatar" className={classes.avatar}></img>
+                    }               
+                </div>
+                { props.user.profil && props.user.profil.bio ?
+             <p>Bio: <strong>{props.user.profil.bio}</strong></p>
+             : 
+             <p>Bio non renseignée </p>
+                }
             </div>
             {user.roles[1] === "ROLE_ADMIN" ?
             <i className="fas fa-trash-alt" style={{margin:"0px 20px",cursor:"pointer"}}
