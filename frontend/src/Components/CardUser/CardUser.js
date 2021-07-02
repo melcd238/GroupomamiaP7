@@ -26,14 +26,7 @@ function CardUser (props){
         <div className={classes.CardUserContainer}>
             <div className={classes.usercontainer}>
                <p> User: <strong>{props.user.username}</strong></p>
-
-               <p style={{margin:"2px"}}> Role(s): </p>
-                 <ul style={{margin: "0", padding:"0",listStyleType:"none"}}>
-                 
-                 </ul>
-                  
-                  
-                   
+      
                 
                <p> User crée le : <strong>{new Date(props.user.createdAt).toLocaleDateString("fr-FR") } </strong> </p>
             </div>

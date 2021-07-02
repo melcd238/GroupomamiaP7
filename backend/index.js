@@ -14,16 +14,17 @@ const rolesRoutes = require('./Routes/Roles')
 const db =require('./models/Index');
 const Role = db.role;
 
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Synchronise');
-  initial();
-});
+//db.sequelize.sync({force:true}).then(() => {
+ // console.log('Synchronise');
+ // initial();
+//});
+db.sequelize.sync()
  
 // Pour la phase de développement : 
-  function initial() {
-    Role.create({
+ function initial() {
+    Role.create({  
       id: 1,
-      name: "user"
+      name: "user" 
     });
    
     Role.create({

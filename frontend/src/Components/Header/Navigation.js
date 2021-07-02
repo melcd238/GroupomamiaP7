@@ -36,13 +36,14 @@ function Navigation (props){
          window.location.reload(); 
     }
 
-
+  
 
     return(
       <nav>
         <ul className={classes.UlComponent}  >
           {!props.user ? <NavigationItem exact navLink="/home"> Home </NavigationItem> : null } 
-          {props.user ? <NavigationItem exact navLink="/profil"> Profil </NavigationItem> : null}
+          {props.user ? <NavigationItem  navLink="/profil">Mon profil </NavigationItem> : null}
+
           {props.user ? <NavigationItem navLink="/filActu"> Fil d'actualité </NavigationItem> : null}
           {props.user ? <NavigationItem navLink='/ajouterPost'> Ajouter un message </NavigationItem> : null}
            {props.user ? <NavigationItem navLink="/users"> Users </NavigationItem> : null}

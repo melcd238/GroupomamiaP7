@@ -23,7 +23,8 @@ exports.register = (req, res, next)=>{
        
        
         })
-    // si le user a un rôle:
+    // si le user a un rôle: // Pour la phase de développement// Pour la production on ne garde que la partie
+    // dans le else qui donne le role user et on crée une route admin pour modifier les roles.
     .then(user=>{
         if(req.body.roles){
             Role.findAll({
@@ -140,14 +141,15 @@ exports.updateOneUser = (req, res, next)=>{
 
 // Supprimer un User
 exports.deleteOneUser = (req, res, next)=>{
-    const idUser = req.params.id
+    
     const userId =UserId(req)
-    User.findOne({where : {id : idUser}})
+    User.findOne({where : {id : userId}})
      .then(user=>{
         if(user.id !== userId){
+            console.log(user.id)
             return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
         }
-        user.destroy({where : {id: idUser}})
+        user.destroy({where : {id: user.id}})
            .then(()=>{
                return res.status(200).json({message:"Le user a été supprimé avec succés"})
            })

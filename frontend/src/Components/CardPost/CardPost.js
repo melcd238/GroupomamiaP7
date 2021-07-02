@@ -30,7 +30,7 @@ const DeletePostHandler = (id) =>{
     })
 }
 const LikePostHandler = (id) =>{
-    axios.post('user/post/createLike/' + id )
+    axios.post('user/post/createLike/' + id,{ headers: authHeader() } )
         .then(response=>{
             console.log(response)
             window.location.reload(); 

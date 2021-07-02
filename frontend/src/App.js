@@ -52,7 +52,7 @@ function App() {
           {currentUser ? <Route exact path='/filActu' component={FilActu}></Route> : null} 
           {currentUser ? <Route exact path='/ajouterPost' component={AddPost}></Route> : null} 
           {currentUser ? <Route exact path='/users' component={User}></Route> : null} 
-          {currentUser ? <Route exact path='/profil' component={Profil}></Route> : null} 
+          {currentUser ? <Route  path='/profil' component={Profil}></Route> : null} 
           {currentUser ? <Route  path='/ajouterCommentaire/:id' component={AddComment}></Route> : null} 
            <Route exact path='/contact' component={Contact}></Route>
            <Route   component={NotFound}></Route>

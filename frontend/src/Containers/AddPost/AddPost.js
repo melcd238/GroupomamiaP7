@@ -1,5 +1,5 @@
 // Librairie
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import classes from '../AddPost/AddPost.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
@@ -8,7 +8,6 @@ import Input from '../../Components/UI/Input'
 function AddPost (props){
     // States
    const [selectedFile , setSelectedFile] = useState(null)
-    const [previewUrl, setPreviewUrl]= useState()
     const [inputs, setInputs] = useState({
         titre:{
             elementType: 'input',
@@ -53,7 +52,7 @@ function AddPost (props){
              },
              defaultValue: props.location.state && props.location.state.post ? props.location.state.post.imageUrl : selectedFile,
              label:'Image/GIF',
-             valid: props.location.state && props.location.state.post ? false : true,
+             valid:  true,
              validation:{
                  required:false
              }
@@ -90,8 +89,11 @@ function AddPost (props){
   const inputChangedHandler = (event, id) =>{
       // Change la valeur
         const newInputs = {...inputs};
-     
-    newInputs[id].value = event.target.value
+        if(event.target.files){  
+            newInputs[id].value = event.target.files[0]
+             setSelectedFile(newInputs[id].value)
+          }
+     newInputs[id].value= event.target.value
     newInputs[id].touched = true;
       // Verification de la valeur
       newInputs[id].valid = checkValidity(event.target.value, newInputs[id].validation);
@@ -113,12 +115,15 @@ const formHandler =(event)=>{
     const formData = new FormData();
     formData.append("titre",inputs.titre.value);
     formData.append("contenu",inputs.contenu.value);
-    //formData.append("image", inputs.imageUrl.value );
+    if(selectedFile){
+        formData.append("image", selectedFile); 
+    }
+   
 
        
     
     if(props.location.state && props.location.state.post){
-        axios.put('user/updatePost/' + props.location.state.post.id ,formData,{ headers: authHeader(),"Content-Type": "multipart/form-data", })
+        axios.put('user/updatePost/' + props.location.state.post.id ,formData,{ headers: authHeader(),"Content-Type": "multipart/form-data" })
         .then(response=>{
             console.log(response)
             props.history.replace('/filActu') 

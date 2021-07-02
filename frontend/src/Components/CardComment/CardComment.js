@@ -65,7 +65,7 @@ function CardComment (props){
                 }
                 {user.roles[1] === "admin" ?
                    <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
-                   onClick={()=>AdminDeleteCommentHandler(props.post.id)}></i> 
+                   onClick={()=>AdminDeleteCommentHandler(props.comment.id)}></i> 
                   :
                   null
                 }
