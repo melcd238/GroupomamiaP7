@@ -41,7 +41,7 @@ function AddPost (props){
                 maxLength:400
             },
             touched: false,
-            errorMessage: "Le contenu doit faire entre 5 et 400 caractères"
+            errorMessage: "Le contenu doit faire entre 5 et 250 caractères"
         },
         imageUrl:{
             elementType: 'input',

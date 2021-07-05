@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize)=>{
-    const Comment = sequelize.define('comment',{
+    const Comment = sequelize.define('comments',{
        
           content :{
             type: Sequelize.STRING,

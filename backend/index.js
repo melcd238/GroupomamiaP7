@@ -14,11 +14,11 @@ const rolesRoutes = require('./Routes/Roles')
 const db =require('./models/Index');
 const Role = db.role;
 
-//db.sequelize.sync({force:true}).then(() => {
- // console.log('Synchronise');
- // initial();
-//});
-db.sequelize.sync()
+db.sequelize.sync({force:true}).then(() => {
+  console.log('Synchronise');
+  initial();
+});
+  // db.sequelize.sync()
  
 // Pour la phase de développement : 
  function initial() {

@@ -7,6 +7,7 @@
 .userParamProfil{
     border-top:solid 1px #cfc5a5; 
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin:10px;
 }
@@ -19,7 +20,7 @@
 }
 .userProfil{
     width: 100%;
-    border-left:solid 1px #cfc5a5; 
+    border-top:solid 1px #cfc5a5; 
     margin:10px;
     display: flex;
     flex-direction: column;

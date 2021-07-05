@@ -12,7 +12,8 @@ function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
      const [comments, setComments] = useState([])
-     const [likes, setLikes] = useState()
+     const [isLiked, setIsLiked] = useState(true)
+     const [allUsersLikes , setAllUsersLikes] = useState([])
      const user = JSON.parse(localStorage.getItem('user'));
  
    //function
@@ -29,16 +30,21 @@ const DeletePostHandler = (id) =>{
         console.log(error)
     })
 }
+
 const LikePostHandler = (id) =>{
-    axios.post('user/post/createLike/' + id,{ headers: authHeader() } )
+    setIsLiked(!isLiked)
+    console.log(isLiked)
+    axios.post('user/post/createLike/' + id,{like: isLiked}, { headers: authHeader() } )
         .then(response=>{
-            console.log(response)
+            console.log(response.data)
+            
             window.location.reload(); 
         })
         .catch(error=>{
             console.log(error)
         })
 }
+
 const AdminDeletePostHandler = (id)=>{
     axios.delete('user/admin/deletePost/' + id , { headers: authHeader() } )
     .then( response=>{
@@ -67,13 +73,28 @@ const AdminDeletePostHandler = (id)=>{
     })
        
     }, [props.post.id])
+
+    useEffect(()=>{
+        axios.get('user/post/getLikesPost/' + props.post.id,{ headers: authHeader() } )
+            .then(response=>{
+                
+                console.log(response)
+                const usersLikes = response.data.likes;
+                setAllUsersLikes(usersLikes)
+
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+
+    }, [props.post.id])
  
 
     return(
         <>
         <div className={classes.CardPost}>
             <div className={classes.CardPostHeader}>
-                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> </span>
+                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <br/> <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> </span>
                 <h2 style={{margin:"0px"}}>{props.post.titre}</h2>
                 <span style={{display:"block", fontStyle:"italic"}}>
                     Publié le:{new Date(props.post.createdAt).toLocaleDateString("fr-FR") }<br/>

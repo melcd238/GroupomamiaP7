@@ -46,46 +46,65 @@ db.role.belongsToMany(db.user, {
     otherKey: "roleId"
   });
   db.user.hasOne(db.profil,{
-    onDelete : "cascade"
+    onDelete : "CASCADE"
+    
+    
   })
   db.profil.belongsTo(db.user,{
     foreignKey: "userId",
+    onDelete : "CASCADE"
   })
+  db.user.hasMany(db.post,{
+    onDelete : "CASCADE"
+   });
   db.post.belongsTo(db.user, {
     foreignKey:{
       name:"userId",
       allowNull: false
-     }
+     },
+     onDelete : "CASCADE"
   });
-  db.user.hasMany(db.post,{
-    onDelete : "cascade"
-   });
+ 
   db.post.hasMany(db.comment,{
-    onDelete:"cascade"
+    onDelete:"CASCADE"
   }); 
   db.comment.belongsTo(db.post,{
     foreignKey:{
       name: "postId",
       allowNull: false
-    }
+    },
+    onDelete : "CASCADE"
     
   });
   db.user.hasMany(db.comment,{
-    onDelete:"cascade",
+    onDelete:"CASCADE",
     
   });
   db.comment.belongsTo(db.user,{
     foreignKey:{
       name:"userId",
       allowNull: false
-     }
+     },
+     onDelete : "CASCADE"
+  });
+  
+  db.user.belongsToMany(db.post,{
+    through:db.like,
+    foreignKey: "userId",
+    otherKey: "postId",
+  })
+  db.post.belongsToMany(db.user,{
+    through:db.like,
+    foreignKey: "postId",
+    otherKey: "userId",
+  })
+  db.like.belongsTo(db.user, { 
+    foreignKey: "userId", onDelete: "CASCADE" 
   });
   db.like.belongsTo(db.post, { 
     foreignKey: "postId", onDelete: "CASCADE" 
   });
-  db.like.belongsTo(db.user, { 
-  foreignKey: "userId", onDelete: "CASCADE" 
-});
+
 
 
   db.ROLES = ["user", "admin"];
