@@ -134,34 +134,7 @@ exports.adminDeleteComment = (req, res, next)=>{
           console.log(error)
       })
 }
-// avoir un commentaire (id du comment) // voir pour enlever cette route qui ne me sert pas. 
-exports.getOneComment = (req, res ,next)=>{
-    const idComment = req.params.id;
-    Comment. findOne({where : {id : idComment}})
-       .then( comment=>{
-           return res.status(200).json({comment})
-       })
-       .catch(error=>{
-           console.log(error)
-       })
-   
 
-}
-// Avoir tous les commentaires pour un message (id du post )
-exports.getAllComment = (req, res ,next)=>{
-    const idPost = req.params.id
-    Comment.findAll({
-        where : {postId : idPost},
-        order : [["createdAt", "DESC"]],
-        include :[
-            { model : User }
-        ]
-    }).then( allComments=>{
-         return res.status(200).json({allComments})
-    })
-      .catch(error=>{
-          console.log(error)
-      })
-   
- }   
+
+
     

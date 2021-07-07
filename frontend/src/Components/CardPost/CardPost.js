@@ -11,9 +11,6 @@ import DisplayedComments from '../DisplayedComments/DisplayedComments'
 function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
-     const [comments, setComments] = useState([])
-     const [isLiked, setIsLiked] = useState(true)
-     const [allUsersLikes , setAllUsersLikes] = useState([])
      const user = JSON.parse(localStorage.getItem('user'));
  
    //function
@@ -32,13 +29,12 @@ const DeletePostHandler = (id) =>{
 }
 
 const LikePostHandler = (id) =>{
-    setIsLiked(!isLiked)
-    console.log(isLiked)
-    axios.post('user/post/createLike/' + id,{like: isLiked}, { headers: authHeader() } )
+  
+    axios.post('user/post/createLike/' + id, { headers: authHeader() } )
         .then(response=>{
             console.log(response.data)
             
-            window.location.reload(); 
+           // window.location.reload(); 
         })
         .catch(error=>{
             console.log(error)
@@ -57,37 +53,6 @@ const AdminDeletePostHandler = (id)=>{
 }
 
 
-
- 
-    // componantDidMount
-    useEffect(()=>{
-        axios.get('user/post/getAllComment/' + props.post.id ,{ headers: authHeader() })
-    .then(response=>{
-       
-        const allComments=response.data.allComments
-        console.log(allComments)
-        setComments(allComments)
-    })
-    .catch(error =>{
-        console.log(error)
-    })
-       
-    }, [props.post.id])
-
-    useEffect(()=>{
-        axios.get('user/post/getLikesPost/' + props.post.id,{ headers: authHeader() } )
-            .then(response=>{
-                
-                console.log(response)
-                const usersLikes = response.data.likes;
-                setAllUsersLikes(usersLikes)
-
-            })
-            .catch(error =>{
-                console.log(error)
-            })
-
-    }, [props.post.id])
  
 
     return(
@@ -149,7 +114,7 @@ const AdminDeletePostHandler = (id)=>{
             </div>
          </div>
            {props.post && props.post.nbrComment >= 1 && displayComments ?
-                    <div> <DisplayedComments comments={comments} ></DisplayedComments> </div>
+                    <div> <DisplayedComments comments={props.post.comments} ></DisplayedComments> </div>
                     :
                     null
            }

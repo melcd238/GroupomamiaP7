@@ -6,6 +6,7 @@ import authHeader from '../../Services/AuthHeader';
 
 //Composant
 import profilAvatar from '../../Images/profilAvatar.svg'
+import DisplayedRoles from '../DisplayedRoles/DisplayedRoles';
 
 //function
 const user = JSON.parse(localStorage.getItem('user'));
@@ -26,7 +27,7 @@ function CardUser (props){
         <div className={classes.CardUserContainer}>
             <div className={classes.usercontainer}>
                <p> User: <strong>{props.user.username}</strong></p>
-      
+               <ul style={{listStyleType:"none", margin:"0",padding:"0"}}> Role(s) : <DisplayedRoles roles={props.user.roles}/> </ul>
                 
                <p> User crée le : <strong>{new Date(props.user.createdAt).toLocaleDateString("fr-FR") } </strong> </p>
             </div>

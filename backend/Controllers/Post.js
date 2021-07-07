@@ -4,6 +4,7 @@ const { post } = require("../models");
 const User = db.user;
 const Post = db.post;
 const Comment = db.comment
+const Like = db.like
 const UserId = require('../Services/GetUserId')
 
 
@@ -138,45 +139,24 @@ exports.adminDeletePost = (req, res, next)=>{
           console.log(error)
       })
 }
-// Voir 1 Post
 
-exports.getOnePost=(req,res,next)=>{
-    const id = req.params.id
-    Post.findOne({ where : {id : id},
-        include: [{
-            model: User
-        }, {
-            model: Comment,
-            include: [{
-                model: User
-            }],
-        }]
-    }).then(onePost =>{
-        if(!onePost){
-            const message = "Le Post n'existe pas "
-            return res.status(400).json({ erreur: message})
-        }else{
-           return res.status(200).json({onePost})
-        }
-    })
-     .catch(error=>{
-        console.log(error)
-        return res.status(404).json({message: "Le post ne peut pas être affiché!"})
-     })
-}  
 
-// Voir tous les Posts
+// Voir tous les Posts //{model : Like , include : [{ model :User}]} ,
 exports.getAllPost=(req,res,next)=>{
     Post.findAll({
-        include: [{ model: User }, {
-            model: Comment,
+        include: [{ model: User },
+            {model: Comment,
             include: [{
                 model: User
             }],
+            order: [[
+                "createdAt", "DESC"
+            ]]
         }],
         order: [[
             "createdAt", "DESC"
         ]]
+        
     }).then(allPost=>{
         return res.status(200).json({allPost})
     }).catch(error=>{

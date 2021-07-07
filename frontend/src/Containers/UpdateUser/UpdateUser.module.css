@@ -1,0 +1,19 @@
+.updateUser{
+    background-color: #cfc5a5;
+    width: 40%;
+    padding: 15px;
+    margin: auto;
+    border-radius: 10px;
+}
+.inputSubmitUpdate{
+    background-color: #faf3e0;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid #cfc5a5;
+    cursor: pointer;
+    font-weight: bolder;
+    padding: 10px;
+}
+.formUpdate{
+    margin-top: 10px;
+}

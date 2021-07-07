@@ -5,6 +5,8 @@ import Styled from 'styled-components'
 import classes from '../Header/Navigation.module.css'
 
 
+
+
 // Composant
 import NavigationItem from './NavigationItem'
 
@@ -32,6 +34,7 @@ function Navigation (props){
         console.log("déconnexion")
         localStorage.removeItem("user");
         // je redirige l'utilisateur sur la page d'acceuil :
+        
          props.history.push('/home');
          window.location.reload(); 
     }

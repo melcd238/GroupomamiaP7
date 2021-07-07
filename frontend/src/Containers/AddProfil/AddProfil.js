@@ -102,11 +102,10 @@ const formHandler =(event)=>{
         axios.put('user/updateProfilUser/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
         .then(response=>{
             console.log(response)
-            window.location.reload(); 
+            props.history.replace('/profil')
+            //window.location.reload(); 
         })
-        .catch(error =>{
-            console.log(error)
-        })
+        .catch(error => console.log(error))
 
 
 
@@ -116,11 +115,11 @@ const formHandler =(event)=>{
     axios.post('user/createProfil/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
     .then(response=>{
         console.log(response)
-        window.location.reload(); 
+        props.history.replace('/profil')
+        //window.location.reload(); 
     })
-    .catch(error =>{
-        console.log(error)
-    })
+    .catch(error => console.log(error))
+   
     }
   
    }
@@ -165,10 +164,10 @@ const formHandler =(event)=>{
         <> 
         {props.User.profil ?  
             
-               <h2>Vous pouvez maintenant modifier votre profil</h2>
+               <h2> Modifier mon profil</h2>
              
              :
-             <h2>Vous pouvez maintenant créer votre profil</h2>
+             <h2> Créer mon profil</h2>
         
             }
             

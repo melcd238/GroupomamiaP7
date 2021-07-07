@@ -113,7 +113,7 @@ exports.getOneUser = (req,res,next)=>{
         .catch((error) => res.status(404).json({ error }))
 }
 
-// Modifier un utilisateur (Rajouter la modification du password)
+// Modifier un utilisateur
 exports.updateOneUser = (req, res, next)=>{
     const idUser = req.params.id
     const userId =UserId(req)
@@ -122,7 +122,7 @@ exports.updateOneUser = (req, res, next)=>{
         if(user.id !== userId){
             return res.status(400).json({message:"vous ne pouvez pas modifier ce User"})
         }
-        user.update({username: req.body.username, email: req.body.email})
+        user.update({username: req.body.username, email: req.body.email, password:bcrypt.hashSync(req.body.password,10)})
         .then(()=>{
             return res.status(200).json({message:"Paramètre User modifié avec succés"})
         })
@@ -199,3 +199,4 @@ exports.getAllUsers = (req, res, next)=>{
      })
 }
 
+ 
