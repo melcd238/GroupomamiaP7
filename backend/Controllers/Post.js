@@ -18,7 +18,7 @@ exports.createPost=(req,res,next)=>{
                 contenu: req.body.contenu,
                 imageUrl: req.file ? `${req.protocol}://${req.get("host")}/upload/${req.file.filename}`: null,  
                 userId : idUser,
-                likes: 0,
+                nbrlike: 0,
                 nbrComment: 0
             }).then(post=>{
                 return res.status(201).json({post})
@@ -145,6 +145,8 @@ exports.adminDeletePost = (req, res, next)=>{
 exports.getAllPost=(req,res,next)=>{
     Post.findAll({
         include: [{ model: User },
+            {model : Like , include: [{model : User}]},
+            
             {model: Comment,
             include: [{
                 model: User
@@ -153,6 +155,7 @@ exports.getAllPost=(req,res,next)=>{
                 "createdAt", "DESC"
             ]]
         }],
+       
         order: [[
             "createdAt", "DESC"
         ]]

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize)=>{
-    const Like = sequelize.define('like',{
+    const Like = sequelize.define('likes',{
        
         id:{
            allowNull: false, 
@@ -22,7 +22,11 @@ module.exports = (sequelize, Sequelize)=>{
                 model: "posts",
                 key:"id"
             }
-        }  
+        } ,
+        isLike : {
+            allowNull: false, 
+            type: Sequelize.INTEGER
+        } 
        
           
   });

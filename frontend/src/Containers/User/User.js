@@ -33,7 +33,8 @@ function User (props){
     return(
         <div className={classes.UserContainer}>
             <h1>Liste des utilisateurs</h1>
-         <DisplayedUsers users={users} ></DisplayedUsers>
+         <DisplayedUsers users={users}
+                         fetchUsers = {getAllUser} ></DisplayedUsers>
         </div>
     )
 }

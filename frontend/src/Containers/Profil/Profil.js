@@ -41,20 +41,25 @@ function Profil (props){
           console.log(error)
       })
     }
+    const getUser = ()=>{
+     
+      const id = user.id
+      axios.get('user/getOneUser/' + id , { headers: authHeader() })
+      .then( response=>{
+          console.log(response.data.user)
+          const myUser = response.data.user
+          setOneUser(myUser)
+      })
+      .catch(error=>{
+          console.log(error)
+      })
+    }
    
 
     // UseEffect pour recuperer les données du User. 
     useEffect(()=>{
-      const id = user.id
-            axios.get('user/getOneUser/' + id , { headers: authHeader() })
-            .then( response=>{
-                console.log(response.data.user)
-                const myUser = response.data.user
-                setOneUser(myUser)
-            })
-            .catch(error=>{
-                console.log(error)
-            })
+       getUser()
+       
         
      },[user.id])
 
@@ -74,7 +79,9 @@ function Profil (props){
                          onClick={OpenUpdateUser}></i> </div>
 
                          {openUpdateUser ?
-                         <UpdateUser User={oneUser}/>
+                         <UpdateUser User={oneUser}
+                                     fetchUser={getUser}
+                                     displayForm={OpenUpdateUser}/>
                          :
                          null
 
@@ -103,7 +110,9 @@ function Profil (props){
                           onClick={OpenCreateProfil}>Créer mon profil </button></div>
                 }
                  {openCreateProfilUser ? 
-            <AddProfil User={oneUser}></AddProfil>
+            <AddProfil User={oneUser}
+                       fetchUser= {getUser}
+                       displayForm={OpenCreateProfil}></AddProfil>
             :
             null
         

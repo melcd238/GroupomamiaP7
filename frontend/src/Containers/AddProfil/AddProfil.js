@@ -102,8 +102,8 @@ const formHandler =(event)=>{
         axios.put('user/updateProfilUser/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
         .then(response=>{
             console.log(response)
-            props.history.replace('/profil')
-            //window.location.reload(); 
+            props.fetchUser(); 
+            props.displayForm();
         })
         .catch(error => console.log(error))
 
@@ -115,8 +115,8 @@ const formHandler =(event)=>{
     axios.post('user/createProfil/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
     .then(response=>{
         console.log(response)
-        props.history.replace('/profil')
-        //window.location.reload(); 
+        props.fetchUser(); 
+        props.displayForm();
     })
     .catch(error => console.log(error))
    

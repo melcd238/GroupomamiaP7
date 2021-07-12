@@ -1,5 +1,5 @@
 // Librairie
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classes from '../CardPost/CardPost.module.css';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
@@ -11,12 +11,18 @@ import DisplayedComments from '../DisplayedComments/DisplayedComments'
 function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
+    // const [displayLikes, setDisplayLikes] = useState(false)
      const user = JSON.parse(localStorage.getItem('user'));
  
    //function
 const OpenCommentClickHandler = (id) =>{
         setDisplayComments(!displayComments)
 }
+//const openLikesClickHandler = (id)=>{
+ //   setDisplayLikes(!displayLikes)
+//}
+
+
 const DeletePostHandler = (id) =>{
     axios.delete('user/deletePost/' + id ,{ headers: authHeader() })
     .then( response=>{
@@ -30,11 +36,11 @@ const DeletePostHandler = (id) =>{
 
 const LikePostHandler = (id) =>{
   
-    axios.post('user/post/createLike/' + id, { headers: authHeader() } )
+    axios.post('user/post/createLike/' + id, {} , { headers: authHeader() })
         .then(response=>{
             console.log(response.data)
             
-           // window.location.reload(); 
+            window.location.reload(); 
         })
         .catch(error=>{
             console.log(error)
@@ -78,10 +84,12 @@ const AdminDeletePostHandler = (id)=>{
             <div className={classes.CardPostFooter}>
                 <div>
                 <i className="far fa-thumbs-up" style={{margin:"0px 20px",cursor:"pointer"}}
-                   onClick={()=>LikePostHandler(props.post.id)}> <span>{props.post.likes}</span> </i>
+                   onClick={()=>LikePostHandler(props.post.id)}
+                  > <span>{props.post.nbrlike}</span> </i>
+
 
                <i className="far fa-comments" style={{margin:"0px 20px",cursor:"pointer"}}
-                 onClick={()=>OpenCommentClickHandler(props.post.id)}            > <span>{props.post.nbrComment}</span> </i>
+                 onClick={()=>OpenCommentClickHandler(props.post.id)} > <span>{props.post.nbrComment}</span> </i>
                 </div>
 
                

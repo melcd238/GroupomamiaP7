@@ -60,8 +60,7 @@ exports.login = (req,res,next)=>{
     User.findOne({
         where :{
             username : req.body.username,
-            
-        }
+       }
     })
     .then((user)=>{
         if(!user){
@@ -106,23 +105,23 @@ exports.getOneUser = (req,res,next)=>{
     User.findOne({ where: { id: idUser },
                    include : [{
                        model : Profil
-                   },{model : Post}, {model : Role}]})
+                   },{model : Post}, {model : Role}], attributes :{exclude:['password']},})
         .then(user=>{
             return res.status(200).json({user})
         })
         .catch((error) => res.status(404).json({ error }))
 }
 
-// Modifier un utilisateur
+// Modifier un utilisateur ( Hors password)
 exports.updateOneUser = (req, res, next)=>{
     const idUser = req.params.id
     const userId =UserId(req)
-    User.findOne({where : {id : idUser}})
+    User.findOne({where : {id : idUser},attributes :{exclude:['password']},})
     .then(user=>{
         if(user.id !== userId){
             return res.status(400).json({message:"vous ne pouvez pas modifier ce User"})
         }
-        user.update({username: req.body.username, email: req.body.email, password:bcrypt.hashSync(req.body.password,10)})
+        user.update({username: req.body.username, email: req.body.email})
         .then(()=>{
             return res.status(200).json({message:"Paramètre User modifié avec succés"})
         })
@@ -134,9 +133,8 @@ exports.updateOneUser = (req, res, next)=>{
     .catch(error=>{
         console.log(error)
     })
-
-
 }
+// Modifier le password 
 
 
 // Supprimer un User

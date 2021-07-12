@@ -88,22 +88,32 @@ db.role.belongsToMany(db.user, {
      onDelete : "CASCADE"
   });
   
-  db.user.belongsToMany(db.post,{
-    through:db.like,
-    foreignKey: "userId",
-    otherKey: "postId",
+  db.user.hasMany(db.like,{
+    onDelete : "CASCADE"
   })
-  db.post.belongsToMany(db.user,{
-    through:db.like,
-    foreignKey: "postId",
-    otherKey: "userId",
+  db.post.hasMany(db.like,{
+    onDelete : "CASCADE"
   })
-  db.like.belongsTo(db.user, { 
-    foreignKey: "userId", onDelete: "CASCADE" 
-  });
+
   db.like.belongsTo(db.post, { 
-    foreignKey: "postId", onDelete: "CASCADE" 
+    foreignKey: {
+      name: "postId",
+      allowNull: false
+    },
+   
   });
+  db.like.belongsTo(db.user, { 
+    foreignKey: {
+      name:'userId',
+      allowNull: false
+    },
+   
+  })
+  
+
+
+ 
+
 
 
 

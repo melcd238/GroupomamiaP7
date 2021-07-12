@@ -12,3 +12,4 @@ router.post('/auth/user/post/createLike/:id',[authJwt.verifyToken],likeCTRL.crea
 
 
 module.exports = router;
+//[authJwt.verifyToken],

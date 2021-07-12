@@ -14,7 +14,7 @@ const DeleteUserClickHandler = (id)=>{
     axios.delete('/user/admin/deleteOneUser/' + id ,{ headers: authHeader() })
     .then(response=>{
         console.log(response)
-        window.location.reload(); 
+       // props.fetchUsers(); 
     })
     .catch(error=>{
         console.log(error)

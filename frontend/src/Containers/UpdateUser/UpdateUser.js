@@ -44,25 +44,25 @@ function UpdateUser (props){
             },
             touched: false,
             errorMessage: "L'émail doit être un émail"
-        },
-        password:{
-            elementType: 'input',
-            elementCongig:{
-                type:'password'
-            },
-            value:props.User.password,
-            label:'Password',
-            valid: true,
-            validation:{
-                required: true,
-                minLength: 8,
-                maxLength:16
-                
-            },
-            touched: false,
-            errorMessage: "Le password doit faire entre 8 et 16 caractères"
-    
         }
+       // password:{
+         //   elementType: 'input',
+          //  elementCongig:{
+           //     type:'password'
+          //  },
+          //  value:props.User.password,
+          //  label:'Password',
+          //  valid: true,
+          //  validation:{
+           //     required: true,
+            //    minLength: 8,
+            //    maxLength:16
+                
+          //  },
+           // touched: false,
+          //  errorMessage: "Le password doit faire entre 8 et 16 caractères"
+    
+       // }
      })
      const [valid, setValid] = useState(true)
 
@@ -104,13 +104,15 @@ const formHandler =(event)=>{
   const userParams = {
       username:inputs.username.value,
       email:inputs.email.value,
-      password:inputs.password.value
+      //password:inputs.password.value
   }
   axios.put('user/updateOneUser/' + id , userParams , { headers: authHeader()})
   .then(response =>{
       console.log(response)
       toast.info("La modifications de vos paramètres a bien été prise en compte!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
-      window.location.reload();
+      props.fetchUser()
+      props.displayForm();
+     
      
       
   })
