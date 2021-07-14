@@ -27,6 +27,7 @@ const DeletePostHandler = (id) =>{
     axios.delete('user/deletePost/' + id ,{ headers: authHeader() })
     .then( response=>{
         console.log(response)
+       // props.fetchPosts()
         window.location.reload(); 
     })
     .catch(error=>{
@@ -36,11 +37,11 @@ const DeletePostHandler = (id) =>{
 
 const LikePostHandler = (id) =>{
   
-    axios.post('user/post/createLike/' + id, {} , { headers: authHeader() })
+    axios.post('user/post/createLike/' + id, {} , { headers: authHeader() }) 
         .then(response=>{
             console.log(response.data)
-            
-            window.location.reload(); 
+            //props.fetchPosts()
+           window.location.reload(); 
         })
         .catch(error=>{
             console.log(error)
@@ -51,6 +52,7 @@ const AdminDeletePostHandler = (id)=>{
     axios.delete('user/admin/deletePost/' + id , { headers: authHeader() } )
     .then( response=>{
         console.log(response)
+        //props.fetchPosts()
         window.location.reload(); 
     })
     .catch(error=>{

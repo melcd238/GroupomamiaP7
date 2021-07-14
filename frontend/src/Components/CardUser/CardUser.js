@@ -8,21 +8,26 @@ import authHeader from '../../Services/AuthHeader';
 import profilAvatar from '../../Images/profilAvatar.svg'
 import DisplayedRoles from '../DisplayedRoles/DisplayedRoles';
 
-//function
+
+
+
+function CardUser (props){
+
+    //function
 const user = JSON.parse(localStorage.getItem('user'));
 const DeleteUserClickHandler = (id)=>{
     axios.delete('/user/admin/deleteOneUser/' + id ,{ headers: authHeader() })
     .then(response=>{
         console.log(response)
-       // props.fetchUsers(); 
+        props.fetchUsers()
+       
+       
     })
     .catch(error=>{
         console.log(error)
     })
 }
 
-
-function CardUser (props){
     return(
         <div className={classes.CardUserContainer}>
             <div className={classes.usercontainer}>

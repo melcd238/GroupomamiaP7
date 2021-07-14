@@ -42,7 +42,9 @@ function FilActu (props){
         <div className={classes.containerFilActu}>
         <h1>Fil d'actualité </h1>
         
-        <DisplayedPosts posts={posts}></DisplayedPosts>
+        <DisplayedPosts posts={posts}
+                       // fetchPosts={getAllPost}
+                       ></DisplayedPosts>
 
        
           

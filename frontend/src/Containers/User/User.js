@@ -28,13 +28,14 @@ function User (props){
 
     useEffect(()=>{
        getAllUser()
-    },[])
+    },[users])
 
     return(
         <div className={classes.UserContainer}>
             <h1>Liste des utilisateurs</h1>
          <DisplayedUsers users={users}
-                         fetchUsers = {getAllUser} ></DisplayedUsers>
+                         fetchUsers = {getAllUser} 
+                         ></DisplayedUsers>
         </div>
     )
 }

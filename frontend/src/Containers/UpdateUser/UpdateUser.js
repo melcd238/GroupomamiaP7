@@ -45,47 +45,31 @@ function UpdateUser (props){
             touched: false,
             errorMessage: "L'émail doit être un émail"
         }
-       // password:{
-         //   elementType: 'input',
-          //  elementCongig:{
-           //     type:'password'
-          //  },
-          //  value:props.User.password,
-          //  label:'Password',
-          //  valid: true,
-          //  validation:{
-           //     required: true,
-            //    minLength: 8,
-            //    maxLength:16
-                
-          //  },
-           // touched: false,
-          //  errorMessage: "Le password doit faire entre 8 et 16 caractères"
-    
-       // }
+  
      })
      const [valid, setValid] = useState(true)
 
-      //Fonctions :
-  const checkValidity = (value , rules)=> {
-    let isValid = true;
-     if(rules.required){
-   isValid = value.trim() !=='' && isValid;
+     //Fonctions :
+ const checkValidity = (value , rules)=> {
+   let isValid = true;
+    if(rules.required){
+  isValid = value.trim() !=='' && isValid;
 }
-   
-    if(rules.minLength){
-        isValid = value.length >= rules.minLength && isValid
-    }
-    if(rules.maxLength){
-        isValid = value.length <= rules.maxLength && isValid
-    }
-    if(rules.email){
-        const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        isValid = pattern.test(value) && isValid
-    }
-    return isValid;
+  
+   if(rules.minLength){
+       isValid = value.length >= rules.minLength && isValid
+   }
+   if(rules.maxLength){
+       isValid = value.length <= rules.maxLength && isValid
+   }
+   if(rules.email){
+       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+       isValid = pattern.test(value) && isValid
+   }
+   return isValid;
 
 };
+ 
 const inputChangedHandler = (event, id) =>{
     const newInputs = {...inputs};
     newInputs[id].value = event.target.value;
@@ -104,7 +88,7 @@ const formHandler =(event)=>{
   const userParams = {
       username:inputs.username.value,
       email:inputs.email.value,
-      //password:inputs.password.value
+      
   }
   axios.put('user/updateOneUser/' + id , userParams , { headers: authHeader()})
   .then(response =>{

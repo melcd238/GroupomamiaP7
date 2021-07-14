@@ -105,7 +105,7 @@ exports.getOneUser = (req,res,next)=>{
     User.findOne({ where: { id: idUser },
                    include : [{
                        model : Profil
-                   },{model : Post}, {model : Role}], attributes :{exclude:['password']},})
+                   },{model : Post}, {model : Role}], attributes :{exclude:['password']}})
         .then(user=>{
             return res.status(200).json({user})
         })
@@ -132,9 +132,27 @@ exports.updateOneUser = (req, res, next)=>{
     })
     .catch(error=>{
         console.log(error)
-    })
+    }) 
 }
-// Modifier le password 
+// Modifier le password  
+exports.updatePassword = (req, res, next)=>{
+    const userId =UserId(req)
+    User.findOne({where : {id: userId}})
+        .then( user=>{
+            if(!user){
+                return res.status(400).json({message:"vous ne pouvez pas modifier ce mot de passe"})
+            }
+            user.update({password:bcrypt.hashSync(req.body.password,10)})
+                .then(()=>{
+                    return res.status(200).json({message:"Password User modifié avec succés"})
+                })
+                .catch(error=>{
+                    console.log(error)
+                    return res.status(400).json({message:"Le password n'a pas pu être modifié"})
+                })
+        })
+        .catch(error=> console.log(error))
+}
 
 
 // Supprimer un User

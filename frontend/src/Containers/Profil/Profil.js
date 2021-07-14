@@ -10,6 +10,7 @@ import authHeader from '../../Services/AuthHeader';
 import profilAvatar from '../../Images/profilAvatar.svg'
 import AddProfil from '../AddProfil/AddProfil';
 import UpdateUser from '../UpdateUser/UpdateUser';
+import UpdatePassword from '../UpdatePassword/UpdatePassword';
 
 
 
@@ -18,6 +19,7 @@ function Profil (props){
     const [oneUser, setOneUser]= useState({})
     const [openCreateProfilUser, setOpenCreateProfilUser]=useState(false)
     const [openUpdateUser, setOpenUpdateUser ]= useState(false)
+    const [openModifMdp, setOpenModifMdp] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'));
 
 
@@ -27,6 +29,10 @@ function Profil (props){
     }
     const OpenUpdateUser = () =>{
          setOpenUpdateUser(!openUpdateUser)
+    }
+    const OpenModifPassword=()=>{
+         setOpenModifMdp(!openModifMdp)
+          
     }
     const DeleteMyUserhandler = ()=>{
       const id = oneUser.id
@@ -73,8 +79,9 @@ function Profil (props){
                   <ul className={classes.paramsListe}>
                       <li>Username : {oneUser.username}</li>
                       <li>Email : {oneUser.email}</li>
-                      <li>Password</li>
                   </ul>
+                  
+
                 <div><i className="fas fa-user-edit" style={{cursor:"pointer"}}
                          onClick={OpenUpdateUser}></i> </div>
 
@@ -86,7 +93,15 @@ function Profil (props){
                          null
 
                          }
+                    <div> <button style={{backgroundColor:"#cfc5a5", border:"none", cursor:"pointer",borderRadius:"5px"}}
+                          onClick={OpenModifPassword}>Modifier mon password </button></div> 
+
+                          {openModifMdp ? 
+                             <UpdatePassword displayForm={OpenModifPassword}/>
+                            :
+                            null}    
             </div>
+            
 
              <div className={classes.userProfil}>
                  <h2>Mon profil</h2>

@@ -12,12 +12,14 @@ function DisplayedPosts(props){
    // Attention, on retourne du jsx donc ()après post dans map()
    let posts=props.posts.map(post=>(
        <CardPost key={post.id}
-                  post={post}/>
+                  post={post}
+                  //fetchPosts={props.fetchPosts()}
+                  />
 
    ))
 
     return(
-        <section className={classes.DisplayedPostsContainer}>
+        <section className={classes.DisplayedPostsContainer}> 
             {posts}
         </section>
     )
