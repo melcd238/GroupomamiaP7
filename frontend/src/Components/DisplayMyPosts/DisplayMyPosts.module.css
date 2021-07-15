@@ -1,0 +1,6 @@
+.DisplayMyPostsContainer{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #cfc5a5;
+    border-bottom: 1px solid #cfc5a5;
+}

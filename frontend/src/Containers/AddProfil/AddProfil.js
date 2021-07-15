@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import classes from '../AddProfil/AddProfil.module.css'
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
+import  {   toast  }  from  'react-toastify';
 
 
 //components
@@ -102,6 +103,7 @@ const formHandler =(event)=>{
         axios.put('user/updateProfilUser/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
         .then(response=>{
             console.log(response)
+            toast.info("La modifications de votre profil a bien été prise en compte!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
             props.fetchUser(); 
             props.displayForm();
         })
@@ -115,6 +117,7 @@ const formHandler =(event)=>{
     axios.post('user/createProfil/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
     .then(response=>{
         console.log(response)
+        toast.info("Votre profil vient d'être crée!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
         props.fetchUser(); 
         props.displayForm();
     })

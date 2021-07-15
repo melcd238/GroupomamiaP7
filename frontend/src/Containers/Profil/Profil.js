@@ -11,12 +11,14 @@ import profilAvatar from '../../Images/profilAvatar.svg'
 import AddProfil from '../AddProfil/AddProfil';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
+import DisplayMyPosts from '../../Components/DisplayMyPosts/DisplayMyPosts';
 
 
 
 function Profil (props){
     //State
     const [oneUser, setOneUser]= useState({})
+    const [myPosts, setMyPosts]=useState([])
     const [openCreateProfilUser, setOpenCreateProfilUser]=useState(false)
     const [openUpdateUser, setOpenUpdateUser ]= useState(false)
     const [openModifMdp, setOpenModifMdp] = useState(false)
@@ -52,9 +54,11 @@ function Profil (props){
       const id = user.id
       axios.get('user/getOneUser/' + id , { headers: authHeader() })
       .then( response=>{
-          console.log(response.data.user)
+          console.log(response.data.user.posts)
           const myUser = response.data.user
+          const myPosts = response.data.user.posts
           setOneUser(myUser)
+          setMyPosts(myPosts)
       })
       .catch(error=>{
           console.log(error)
@@ -142,6 +146,7 @@ function Profil (props){
 
             <div className={classes.publications}>
               <h2>Mes publications</h2>
+              <DisplayMyPosts myPosts={myPosts}/>
             </div>
 
         </div>

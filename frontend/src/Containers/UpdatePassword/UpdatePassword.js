@@ -1,7 +1,7 @@
 //Librairie
 import React, { useState } from 'react'
 import classes from '../UpdatePassword/UpdatePassword.module.css'
-import  {   toast  }  from  'react-toastify' ;
+import  {   toast  }  from  'react-toastify';
 import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
 
