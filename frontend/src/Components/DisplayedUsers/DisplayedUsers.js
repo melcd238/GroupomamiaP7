@@ -22,4 +22,4 @@ function DisplayedUsers (props){
     )
 }
 
-export default DisplayedUsers
+export default DisplayedUsers 

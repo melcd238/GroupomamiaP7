@@ -19,7 +19,7 @@
     background-color:#cfc5a5;
     display: flex;
     justify-content: space-between;
-    height: 20px;
+    min-height: 20px;
 }
 .btnCommenter{
     background-color: #faf3e0;
@@ -40,4 +40,11 @@
 .btnUpdate{
     text-decoration: none;
     color:inherit;
+}
+.UsersLikes{
+    border: 1px solid #cfc5a5;
+    margin-right: 88%;
+    background-color:#cfc5a5 ;
+    border-top-right-radius: 5px;
+    
 }

@@ -1,6 +1,7 @@
 //Librairie
 import React, { useState } from 'react'
 import classes from '../Login/Login.module.css'
+import  {   toast  }  from  'react-toastify' ; 
 import axios from '../../Services/AxiosApi'
 
 // Component
@@ -86,19 +87,17 @@ function Login (props){
         }
         axios.post('login', user)
         .then(response =>{
-            console.log(response)
             if (response.data.accessToken) {
                 localStorage.setItem("user", JSON.stringify(response.data));
-                
-              }
-              
-              props.history.push('/filActu') 
-              window.location.reload(); 
-            
+                props.history.push('/filActu') 
+                window.location.reload(); 
+            }
+             
             
         })
         .catch(error => {
             console.log(error)
+            toast.error("Utilisateur non trouvé, Veuillez vérifier vos paramètres de compte ou vous enregistrer!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
         })
         
        

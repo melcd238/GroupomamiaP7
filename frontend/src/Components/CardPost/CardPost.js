@@ -7,6 +7,7 @@ import {withRouter, Link} from 'react-router-dom';
 
 // Composant 
 import DisplayedComments from '../DisplayedComments/DisplayedComments'
+import UsersLikes from '../UsersLikes/UsersLikes';
 
 function CardPost(props){
      //State
@@ -78,8 +79,15 @@ const AdminDeletePostHandler = (id)=>{
                  <p>{props.post.contenu} </p>
 
                 {props.post.imageUrl === null ? null :
-                 <img src={props.post.imageUrl} alt="téléchargée par le user" style={{width:"140px", height:"140px"}}></img> }
+                 <img src={props.post.imageUrl} alt="téléchargée par le user" style={{width:"200px", height:"200px"}}></img> }
                 
+                {props.post && props.post.nbrlike >= 1 ? 
+                <div className={classes.UsersLikes}>
+                <UsersLikes likes={props.post.likes}/> 
+                </div>
+                :
+                null
+                }
                  
             </div>
 
@@ -87,7 +95,8 @@ const AdminDeletePostHandler = (id)=>{
                 <div>
                 <i className="far fa-thumbs-up" style={{margin:"0px 20px",cursor:"pointer"}}
                    onClick={()=>LikePostHandler(props.post.id)}
-                  > <span>{props.post.nbrlike}</span> </i>
+                  > <span>{props.post.nbrlike}</span></i>
+                 
 
 
                <i className="far fa-comments" style={{margin:"0px 20px",cursor:"pointer"}}

@@ -117,8 +117,8 @@ const formHandler =(event)=>{
     axios.post('user/createProfil/' + id ,formData ,{ headers: authHeader() ,"Content-Type": "multipart/form-data"})
     .then(response=>{
         console.log(response)
-        toast.info("Votre profil vient d'être crée!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
         props.fetchUser(); 
+        toast.info("Votre profil vient d'être crée!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
         props.displayForm();
     })
     .catch(error => console.log(error))

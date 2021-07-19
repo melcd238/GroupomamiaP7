@@ -35,7 +35,7 @@ const Role = db.role;
 //var corsOptions = {
  // origin: "http://localhost:3000"
 //};
-// pour les headers de mes requêtes ... voir plus tard pour modifier.CORS
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

@@ -4,6 +4,7 @@ const User = db.user;
 const Role = db.role;
 const Profil = db.profil
 const Post = db.post
+const Comment = db.comment
 
 
 const Op = db.Sequelize.Op;
@@ -99,13 +100,20 @@ exports.login = (req,res,next)=>{
 
 };
 
+
 // Voir l'utilisateur
 exports.getOneUser = (req,res,next)=>{
     const idUser = req.params.id
     User.findOne({ where: { id: idUser },
                    include : [{
                        model : Profil
-                   },{model : Post}, {model : Role}], attributes :{exclude:['password']}})
+                   },{model : Post,
+                     include :[{model: Comment}],
+                      order: [[
+                        "createdAt", "DESC"
+                    ]]},
+                     {model : Role}], 
+                     attributes :{exclude:['password']}})
         .then(user=>{
             return res.status(200).json({user})
         })

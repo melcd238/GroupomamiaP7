@@ -93,8 +93,8 @@ const formHandler =(event)=>{
   axios.put('user/updateOneUser/' + id , userParams , { headers: authHeader()})
   .then(response =>{
       console.log(response)
-      toast.info("La modifications de vos paramètres a bien été prise en compte!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
       props.fetchUser()
+      toast.info("La modifications de vos paramètres a bien été prise en compte!!!", {autoClose: 3000, pauseOnHover: false, position: "bottom-right"})
       props.displayForm();
      
      

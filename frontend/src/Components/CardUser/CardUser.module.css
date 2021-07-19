@@ -1,7 +1,7 @@
 .CardUserContainer{
     border: 2px solid #cfc5a5;
     border-radius: 3px;
-    width: 70%;
+    width: 80%;
     margin: 20px;
     display: flex;
     justify-content: space-around;
@@ -11,7 +11,7 @@
     border: 1px solid #cfc5a5;
     border-radius: 3px;
     margin: 10px;
-    width: 30%;
+    width: 38%;
     background-color: white;
 }
 .profilContainer{

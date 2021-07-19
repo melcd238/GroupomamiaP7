@@ -145,11 +145,11 @@ exports.adminDeletePost = (req, res, next)=>{
 exports.getAllPost=(req,res,next)=>{
     Post.findAll({
         include: [{ model: User },
-            {model : Like , include: [{model : User}]},
+            {model : Like , include: [{model : User,attributes :{exclude:['password']} }]},
             
             {model: Comment,
             include: [{
-                model: User
+                model: User, attributes :{exclude:['password']}
             }],
             order: [[
                 "createdAt", "DESC"

@@ -12,7 +12,7 @@ exports.createLikePost = (req, res, next)=>{
     const idPost = req.params.id
     const idUser= UserId(req)
     const liked = 1;
-   // const disLiked = 0;
+  
     
    Post.findOne({where : {id : idPost}})
        .then(postFound=>{
