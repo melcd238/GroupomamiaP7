@@ -43,7 +43,7 @@ function FilActu (props){
         <h1>Fil d'actualité </h1>
         
         <DisplayedPosts posts={posts}
-                       // fetchPosts={getAllPost}
+                        fetchPosts={getAllPost}
                        ></DisplayedPosts>
 
        

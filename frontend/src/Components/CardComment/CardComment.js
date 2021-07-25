@@ -7,13 +7,16 @@ import { Link } from 'react-router-dom'
 
 
 
-//function
+
+
+function CardComment (props){
+    //function
 const user = JSON.parse(localStorage.getItem('user'));
 const DeleteCommentClickHandler= (id)=>{
     axios.delete('/user/post/deleteComment/' + id , { headers: authHeader() })
     .then(response=>{
         console.log(response)
-        window.location.reload(); 
+        props.fetchPosts() 
     })
     .catch(error=>{
         console.log(error)
@@ -23,15 +26,13 @@ const AdminDeleteCommentHandler = (id)=>{
     axios.delete('user/post/admin/deleteComment/' + id,{ headers: authHeader() } )
     .then(response=>{
         console.log(response)
-        window.location.reload(); 
-    })
+       props.fetchPosts() 
+    }) 
     .catch(error=>{
         console.log(error)
     })
 
 }
-
-function CardComment (props){
     return(
         <>
         <div className={classes.CardComment}>

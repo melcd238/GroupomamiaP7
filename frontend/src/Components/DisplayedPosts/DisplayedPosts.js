@@ -13,8 +13,8 @@ function DisplayedPosts(props){
    let posts=props.posts.map(post=>(
        <CardPost key={post.id}
                   post={post}
-                  //fetchPosts={props.fetchPosts()}
-                  />
+                  fetchPosts={props.fetchPosts}
+                  /> 
 
    ))
 

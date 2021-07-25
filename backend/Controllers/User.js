@@ -1,5 +1,6 @@
 const db = require("../Models");
 const config = require("../config/Auth.config");
+const Sequelize = require("sequelize");
 const User = db.user;
 const Role = db.role;
 const Profil = db.profil
@@ -107,13 +108,16 @@ exports.getOneUser = (req,res,next)=>{
     User.findOne({ where: { id: idUser },
                    include : [{
                        model : Profil
-                   },{model : Post,
-                     include :[{model: Comment}],
-                      order: [[
-                        "createdAt", "DESC"
-                    ]]},
+                   },
+                   
+                   {model : Post, 
+                    as:"posts"},
+
                      {model : Role}], 
-                     attributes :{exclude:['password']}})
+                     attributes :{exclude:['password']},
+                     order:[["posts","createdAt", "DESC"] ]
+                     
+                    })
         .then(user=>{
             return res.status(200).json({user})
         })
@@ -163,7 +167,7 @@ exports.updatePassword = (req, res, next)=>{
 }
 
 
-// Supprimer un User
+// Supprimer un User // ajouter la décrementation du like et du comment si le user a liké ou commenté un post. 
 exports.deleteOneUser = (req, res, next)=>{
     
     const userId =UserId(req)

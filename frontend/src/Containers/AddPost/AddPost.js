@@ -5,6 +5,8 @@ import axios from '../../Services/AxiosApi';
 import authHeader from '../../Services/AuthHeader';
 //Components
 import Input from '../../Components/UI/Input'
+
+
 function AddPost (props){
     // States
    const [selectedFile , setSelectedFile] = useState(null)
@@ -138,7 +140,7 @@ const formHandler =(event)=>{
         .then(response=>{
             console.log(response)
             props.history.replace('/filActu') 
-           // window.location.reload(); 
+           
         })
         .catch(error =>{
             console.log(error)

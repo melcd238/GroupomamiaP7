@@ -80,7 +80,7 @@ const formHandler =(event)=>{
     .then(response=>{
         console.log(response)
         props.history.replace('/filActu') 
-       // window.location.reload(); 
+      
     })
     .catch(error =>{
         console.log(error)
@@ -91,7 +91,7 @@ const formHandler =(event)=>{
   .then(response=>{
       console.log(response)
       props.history.replace('/filActu') 
-     // window.location.reload(); 
+     
   })
   .catch(error =>{
       console.log(error)

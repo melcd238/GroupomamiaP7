@@ -10,7 +10,7 @@ function DisplayedUsers (props){
    let users = props.users.map(user=>(
        <CardUser key={user.id}
                  user={user}
-                fetchUsers ={props.fetchUsers()}
+                fetchUsers ={props.fetchUsers}
                 />
    ))
 
@@ -22,4 +22,4 @@ function DisplayedUsers (props){
     )
 }
 
-export default DisplayedUsers 
+export default DisplayedUsers  

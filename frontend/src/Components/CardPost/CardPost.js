@@ -12,24 +12,21 @@ import UsersLikes from '../UsersLikes/UsersLikes';
 function CardPost(props){
      //State
      const [displayComments, setDisplayComments] = useState(false)
-    // const [displayLikes, setDisplayLikes] = useState(false)
      const user = JSON.parse(localStorage.getItem('user'));
  
    //function
 const OpenCommentClickHandler = (id) =>{
         setDisplayComments(!displayComments)
 }
-//const openLikesClickHandler = (id)=>{
- //   setDisplayLikes(!displayLikes)
-//}
+
 
 
 const DeletePostHandler = (id) =>{
     axios.delete('user/deletePost/' + id ,{ headers: authHeader() })
     .then( response=>{
         console.log(response)
-       // props.fetchPosts()
-        window.location.reload(); 
+        props.fetchPosts()
+       
     })
     .catch(error=>{
         console.log(error)
@@ -41,8 +38,8 @@ const LikePostHandler = (id) =>{
     axios.post('user/post/createLike/' + id, {} , { headers: authHeader() }) 
         .then(response=>{
             console.log(response.data)
-            //props.fetchPosts()
-           window.location.reload(); 
+            props.fetchPosts()
+           
         })
         .catch(error=>{
             console.log(error)
@@ -53,8 +50,8 @@ const AdminDeletePostHandler = (id)=>{
     axios.delete('user/admin/deletePost/' + id , { headers: authHeader() } )
     .then( response=>{
         console.log(response)
-        //props.fetchPosts()
-        window.location.reload(); 
+        props.fetchPosts()
+       
     })
     .catch(error=>{
         console.log(error)
@@ -68,7 +65,13 @@ const AdminDeletePostHandler = (id)=>{
         <>
         <div className={classes.CardPost}>
             <div className={classes.CardPostHeader}>
-                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <br/> <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> </span>
+                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <br/> <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> 
+                { props.post.user.profil && props.post.user.profil.avatar? 
+                 <img src={props.post.user.profil.avatar} style={{width:"20px", height:"20px",borderRadius:"50%"}} ></img>
+                 :
+                 null
+                }
+                 </span>
                 <h2 style={{margin:"0px"}}>{props.post.titre}</h2>
                 <span style={{display:"block", fontStyle:"italic"}}>
                     Publié le:{new Date(props.post.createdAt).toLocaleDateString("fr-FR") }<br/>
@@ -133,7 +136,9 @@ const AdminDeletePostHandler = (id)=>{
             </div>
          </div>
            {props.post && props.post.nbrComment >= 1 && displayComments ?
-                    <div> <DisplayedComments comments={props.post.comments} ></DisplayedComments> </div>
+                    <div> <DisplayedComments comments={props.post.comments}
+                                             fetchPosts={props.fetchPosts} >
+                        </DisplayedComments> </div>
                     :
                     null
            }

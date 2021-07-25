@@ -5,6 +5,7 @@ const User = db.user;
 const Post = db.post;
 const Comment = db.comment
 const Like = db.like
+const Profil= db.profil
 const UserId = require('../Services/GetUserId')
 
 
@@ -144,7 +145,7 @@ exports.adminDeletePost = (req, res, next)=>{
 // Voir tous les Posts //{model : Like , include : [{ model :User}]} ,
 exports.getAllPost=(req,res,next)=>{
     Post.findAll({
-        include: [{ model: User },
+        include: [{ model: User ,attributes :{exclude:['password']} ,include:[{model: Profil}]},
             {model : Like , include: [{model : User,attributes :{exclude:['password']} }]},
             
             {model: Comment,

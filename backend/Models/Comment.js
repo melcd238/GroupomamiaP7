@@ -6,7 +6,9 @@ module.exports = (sequelize, Sequelize)=>{
           },
           userId :{
             type: Sequelize.INTEGER,
-          }
+          },
+         
+        
           
   });
     

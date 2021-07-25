@@ -10,7 +10,9 @@ import CardComment from '../CardComment/CardComment'
 function DisplayedComments (props){
   let comments = props.comments.map(comment=>(
       <CardComment key={comment.id}
-                   comment={comment}/>
+                   comment={comment}
+                   fetchPosts={props.fetchPosts}
+                   />
   ))
 
 
@@ -24,4 +26,4 @@ function DisplayedComments (props){
     )
 }
 
-export default DisplayedComments
+export default DisplayedComments 
