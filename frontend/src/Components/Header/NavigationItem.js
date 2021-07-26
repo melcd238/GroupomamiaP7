@@ -17,8 +17,8 @@ function NavigationItem (props){
     return(
         <LiComponents>
             <NavLink to={props.navLink}
-                      style={{textDecoration:"none",color:"white",fontWeight:"bolder"}}
-                      activeStyle={{color:"black"}}
+                      style={{textDecoration:"none",color:"rgba(0, 0, 0, 0.6)",fontWeight:"bolder"}}
+                      activeStyle={{textDecoration:"underline white double" , color:"black"}}
                       exact={props.exact}>{props.children}
             </NavLink>
         </LiComponents>

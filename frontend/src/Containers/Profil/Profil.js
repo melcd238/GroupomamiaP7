@@ -76,7 +76,7 @@ function Profil (props){
     return(
         <>
         <div className={classes.profilContainer}>
-        <h1> Bienvenu  {oneUser.username} sur votre compte Groupomania </h1>
+        <h1> Bienvenu <span style={{color:"#a89867", fontWeight:"bolder",textTransform:"capitalize"}}> {oneUser.username} </span>  sur votre compte Groupomania </h1>
           <div className={classes.userParamProfil}>
             <div className={classes.userParams}>
                <h2>Paramètres de mon compte</h2>

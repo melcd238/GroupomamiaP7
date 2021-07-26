@@ -14,6 +14,7 @@ function DisplayedComments (props){
                    fetchPosts={props.fetchPosts}
                    />
   ))
+  comments.reverse();
 
 
     return(

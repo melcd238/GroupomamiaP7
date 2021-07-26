@@ -1,4 +1,4 @@
-// Librairie
+// Librairies
 import React from "react"
 import classes from '../CardComment/CardComment.module.css'
 import axios from '../../Services/AxiosApi';
@@ -6,7 +6,8 @@ import authHeader from '../../Services/AuthHeader';
 import { Link } from 'react-router-dom'
 
 
-
+// Composant
+import profilAvatar from '../../Images/profilAvatar.svg'
 
 
 function CardComment (props){
@@ -37,11 +38,30 @@ const AdminDeleteCommentHandler = (id)=>{
         <>
         <div className={classes.CardComment}>
             <div className={classes.CardCommentHeader}>
-                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <strong style={{fontStyle:"normal"}}>{props.comment.user.username}</strong>  </span>
+            <div style={{display:"flex"}}>
+                    <div>
+                { props.comment.user.profil && props.comment.user.profil.avatar? 
+                 <img src={props.comment.user.profil.avatar} style={{width:"40px", height:"40px",borderRadius:"50%", border:"1px solid white"}} alt="avatar" ></img>
+                 :
+                 <img src={profilAvatar} alt="avatar" style={{width:"40px", height:"40px",borderRadius:"50%"}} ></img>
+                }
+                   </div>
+                <div style={{fontStyle:"normal", margin:"10px",fontWeight:"bolder" ,textTransform:"capitalize"}}>{props.comment.user.username}</div>
+                 </div>
+
+                
                 <h2 style={{margin:"0px", fontSize:".9rem"}}> Commentaire </h2>
                 <span style={{display:"block", fontStyle:"italic"}}>
                     Publié le:{new Date(props.comment.createdAt).toLocaleDateString("fr-FR") }<br/>
-                     {new Date(props.comment.createdAt).toLocaleTimeString("fr-FR") } </span>
+                     {new Date(props.comment.createdAt).toLocaleTimeString("fr-FR") }
+
+                     {user.roles[1] === "admin" ?
+                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
+                   onClick={()=>AdminDeleteCommentHandler(props.comment.id)}></i> 
+                  :
+                  null
+                } </span>
+
             </div>
 
             <div className={classes.CardCommentContent}>
@@ -64,13 +84,7 @@ const AdminDeleteCommentHandler = (id)=>{
                   :
                   null     
                 }
-                {user.roles[1] === "admin" ?
-                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
-                   onClick={()=>AdminDeleteCommentHandler(props.comment.id)}></i> 
-                  :
-                  null
-                }
-               
+                
                
             </div>
          </div>

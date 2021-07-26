@@ -8,6 +8,7 @@ import {withRouter, Link} from 'react-router-dom';
 // Composant 
 import DisplayedComments from '../DisplayedComments/DisplayedComments'
 import UsersLikes from '../UsersLikes/UsersLikes';
+import profilAvatar from '../../Images/profilAvatar.svg'
 
 function CardPost(props){
      //State
@@ -65,17 +66,27 @@ const AdminDeletePostHandler = (id)=>{
         <>
         <div className={classes.CardPost}>
             <div className={classes.CardPostHeader}>
-                <span style={{display:"block", fontStyle:"italic"}}>Publié par: <br/> <strong style={{fontStyle:"normal"}}>{props.post.user.username}</strong> 
+                <div style={{display:"flex"}}>
+                    <div>
                 { props.post.user.profil && props.post.user.profil.avatar? 
-                 <img src={props.post.user.profil.avatar} style={{width:"20px", height:"20px",borderRadius:"50%"}} ></img>
+                 <img src={props.post.user.profil.avatar} style={{width:"40px", height:"40px",borderRadius:"50%", border:"1px solid white"}} alt="avatar" ></img>
                  :
-                 null
+                 <img src={profilAvatar} alt="avatar" style={{width:"40px", height:"40px",borderRadius:"50%"}} ></img>
                 }
-                 </span>
-                <h2 style={{margin:"0px"}}>{props.post.titre}</h2>
+                   </div>
+                <div style={{fontStyle:"normal", margin:"10px",fontWeight:"bolder",textTransform:"capitalize"}}>{props.post.user.username}</div>
+                 </div>
+                <h2 style={{margin:"0px",textTransform:"capitalize"}}>{props.post.titre}</h2>
                 <span style={{display:"block", fontStyle:"italic"}}>
                     Publié le:{new Date(props.post.createdAt).toLocaleDateString("fr-FR") }<br/>
-                     {new Date(props.post.createdAt).toLocaleTimeString("fr-FR") } </span>
+                     {new Date(props.post.createdAt).toLocaleTimeString("fr-FR") }
+
+                     {user.roles[1] === "admin" ?
+                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
+                   onClick={()=>AdminDeletePostHandler(props.post.id)}></i> 
+                  :
+                  null
+                } </span>
             </div>
 
             <div className={classes.CardPostContent}>
@@ -123,18 +134,9 @@ const AdminDeletePostHandler = (id)=>{
                 </div>
                  : null
                 }
-                {user.roles[1] === "admin" ?
-                   <i className="fas fa-eraser" style={{margin:"0px 20px",cursor:"pointer"}}
-                   onClick={()=>AdminDeletePostHandler(props.post.id)}></i> 
-                  :
-                  null
-                }
-                
-                               
-
 
             </div>
-         </div>
+         </div> 
            {props.post && props.post.nbrComment >= 1 && displayComments ?
                     <div> <DisplayedComments comments={props.post.comments}
                                              fetchPosts={props.fetchPosts} >

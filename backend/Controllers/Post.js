@@ -149,12 +149,8 @@ exports.getAllPost=(req,res,next)=>{
             {model : Like , include: [{model : User,attributes :{exclude:['password']} }]},
             
             {model: Comment,
-            include: [{
-                model: User, attributes :{exclude:['password']}
-            }],
-            order: [[
-                "createdAt", "DESC"
-            ]]
+            include: [{  model: User ,attributes :{exclude:['password']} ,include:[{model: Profil}]}]
+            
         }],
        
         order: [[

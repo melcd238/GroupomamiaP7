@@ -31,7 +31,7 @@ const DeleteUserClickHandler = (id)=>{
     return(
         <div className={classes.CardUserContainer}>
             <div className={classes.usercontainer}>
-               <p> User: <strong>{props.user.username}</strong></p>
+               <p> User: <strong style={{textTransform:"capitalize"}}>{props.user.username}</strong></p>
                <ul style={{listStyleType:"none", margin:"0",padding:"0"}}> Role(s) : <DisplayedRoles roles={props.user.roles}/> </ul>
                 
                <p> User crée le : <strong>{new Date(props.user.createdAt).toLocaleDateString("fr-FR") } </strong> </p>

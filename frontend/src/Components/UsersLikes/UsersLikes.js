@@ -5,7 +5,7 @@ import classes from '../UsersLikes/UsersLikes.module.css'
 
 function UsersLikes (props){
     let likes = props.likes.map(like=>(
-        <li key={like.id}> {like.user.username} </li>
+        <li key={like.id} style={{textTransform:"capitalize"}}> {like.user.username} </li>
     )
         
     )
