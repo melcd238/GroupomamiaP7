@@ -12,6 +12,7 @@ import AddProfil from '../AddProfil/AddProfil';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
 import DisplayMyPosts from '../../Components/DisplayMyPosts/DisplayMyPosts';
+import DisplayedRoles from '../../Components/DisplayedRoles/DisplayedRoles';
 
 
 
@@ -120,12 +121,15 @@ function Profil (props){
                    <p> Bio non renseignée </p>
                 }
                
+               <div>
+               <ul style={{listStyleType:"none", margin:"0",padding:"0"}}> Role(s) : <DisplayedRoles roles={oneUser.roles}/> </ul>
+               </div>
 
                 {oneUser.profil ?
                 
-                    <i className="fas fa-user-edit" style={{cursor:"pointer"}}onClick={OpenCreateProfil}></i> 
+                    <i className="fas fa-user-edit" style={{cursor:"pointer", margin:"10px 0px"}}onClick={OpenCreateProfil}></i> 
                     :
-                   <div> <button style={{backgroundColor:"#cfc5a5", border:"none", cursor:"pointer",borderRadius:"5px"}}
+                   <div> <button style={{backgroundColor:"#cfc5a5", border:"none", cursor:"pointer",borderRadius:"5px", margin:"10px 0px"}}
                           onClick={OpenCreateProfil}>Créer mon profil </button></div>
                 }
                  {openCreateProfilUser ? 

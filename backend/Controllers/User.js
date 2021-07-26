@@ -105,13 +105,17 @@ exports.login = (req,res,next)=>{
 // Voir l'utilisateur
 exports.getOneUser = (req,res,next)=>{
     const idUser = req.params.id
-    User.findOne({ where: { id: idUser },
+    User.findOne({ where: { id: idUser }, 
                    include : [{
                        model : Profil
                    },
                    
                    {model : Post, 
-                    as:"posts"},
+                    as:"posts",
+                    include : [ {model: Comment,
+                        include: [{  model: User ,attributes :{exclude:['password']} ,include:[{model: Profil}]}]
+                
+                }]},
 
                      {model : Role}], 
                      attributes :{exclude:['password']},
@@ -179,6 +183,10 @@ exports.deleteOneUser = (req, res, next)=>{
         }
         user.destroy({where : {id: user.id}})
            .then(()=>{
+               //Like.findAll({where : {id: userId}})
+               // decrementer le nbrlike en fonction du postId et du UserId sachant que le User ne peut liké qu'une fois le post
+               //Comment.findAll({where : id:userId})
+               // decrementer le nbrComment en fonction du postId et du userId sachant que le user peut faire plusieurs commentaires
                return res.status(200).json({message:"Le user a été supprimé avec succés"})
            })
            .catch(error=>{
