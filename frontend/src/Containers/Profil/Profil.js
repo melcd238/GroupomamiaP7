@@ -16,10 +16,13 @@ import DisplayedRoles from '../../Components/DisplayedRoles/DisplayedRoles';
 
 
 
+
+
 function Profil (props){
     //State
     const [oneUser, setOneUser]= useState({})
     const [myPosts, setMyPosts]=useState([])
+    const [myRoles, setMyRoles]= useState([])
     const [openCreateProfilUser, setOpenCreateProfilUser]=useState(false)
     const [openUpdateUser, setOpenUpdateUser ]= useState(false)
     const [openModifMdp, setOpenModifMdp] = useState(false)
@@ -58,8 +61,10 @@ function Profil (props){
           console.log(response.data.user.posts)
           const myUser = response.data.user
           const myPosts = response.data.user.posts
+          const myRoles= response.data.user.roles
           setOneUser(myUser)
           setMyPosts(myPosts)
+          setMyRoles(myRoles)
       })
       .catch(error=>{
           console.log(error)
@@ -120,10 +125,10 @@ function Profil (props){
                    :
                    <p> Bio non renseignée </p>
                 }
+
+            <div><ul style={{listStyleType:"none", margin:"0",padding:"0"}}> Role(s) : <DisplayedRoles roles={myRoles}/> </ul></div>  
                
-               <div>
-               <ul style={{listStyleType:"none", margin:"0",padding:"0"}}> Role(s) : <DisplayedRoles roles={oneUser.roles}/> </ul>
-               </div>
+              
 
                 {oneUser.profil ?
                 

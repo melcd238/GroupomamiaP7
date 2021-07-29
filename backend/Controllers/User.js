@@ -1,6 +1,6 @@
 const db = require("../Models");
 const config = require("../config/Auth.config");
-const Sequelize = require("sequelize");
+const fs = require('fs');
 const User = db.user;
 const Role = db.role;
 const Profil = db.profil
@@ -78,6 +78,7 @@ exports.login = (req,res,next)=>{
         let token = jwt.sign({userId: user.id}, config.SECRET_TOKEN, {
             expiresIn : 86400 // 24H
         });
+        // envoie du rôle dans le localStorage du front pour la session admin.
         let authorities = [];
         user.getRoles()
         .then((roles)=>{
@@ -94,9 +95,11 @@ exports.login = (req,res,next)=>{
             })
 
         })
-    })
-    .catch((err)=>{
-        return res.status(500).json({message : err.message})
+
+        })
+    
+    .catch((error)=>{
+        return res.status(500).json({message : error.message})
     })
 
 };
@@ -171,53 +174,116 @@ exports.updatePassword = (req, res, next)=>{
 }
 
 
-// Supprimer un User // ajouter la décrementation du like et du comment si le user a liké ou commenté un post. 
+// Supprimer un User  
 exports.deleteOneUser = (req, res, next)=>{
-    
-    const userId =UserId(req)
-    User.findOne({where : {id : userId}})
-     .then(user=>{
-        if(user.id !== userId){
-            console.log(user.id)
-            return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
-        }
-        user.destroy({where : {id: user.id}})
-           .then(()=>{
-               //Like.findAll({where : {id: userId}})
-               // decrementer le nbrlike en fonction du postId et du UserId sachant que le User ne peut liké qu'une fois le post
-               //Comment.findAll({where : id:userId})
-               // decrementer le nbrComment en fonction du postId et du userId sachant que le user peut faire plusieurs commentaires
-               return res.status(200).json({message:"Le user a été supprimé avec succés"})
-           })
-           .catch(error=>{
-               console.log(error)
-               return res.status(400).json({message:"Le user n'a pas pus être détruit"})
-           })
-     })
-     .catch(error=>{
-         console.log(error)
-     })
-} 
+    const userid = UserId(req)
+    User.findOne({where : {id:  userid}})
+        .then( user=>{
+            if(user.id !== userid){
+                console.log(user.id)
+                return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
+            }
+            })
+        .then(()=>{
+            Profil.findOne({where : {userId: userid}})
+                  .then( profil=>{
+                    if(profil.avatar !== null){
+                        const fileName = profil.avatar.split('/upload/')[1];
+                        fs.unlink(`upload/${fileName}`, (error => {
+                            if (error){
+                                return console.log(error);
+                            } 
+                            else {
+                              return  console.log("Image supprimée: " + fileName);
+                            }
+                        }));
+                    }
+
+                  })
+        })
+        .then( ()=>{
+            Post.findAll({where: {userId : userid }})
+            .then( posts=>{
+                for(let i=0; i < posts.length; i++){
+                    if(posts[i].imageUrl){
+                        const filename =posts[i].imageUrl.split('/upload/')[1];
+                fs.unlink(`./upload/${filename}`, (error) => {
+                    if(error){
+                       return console.log(error);
+                    }else {
+                      return console.log("Image supprimée: " + filename);
+                    }
+                })
+
+                    }
+
+                }
+            })
+        })
+        .then( ()=>{
+            User.destroy({where : {id : userid}})
+                .then(()=>{
+                    return res.status(200).json({message:"Le user a été supprimé avec succés"})
+                })
+
+        })
+        .catch(error=>console.log(error))
+}
 
 // Pour l'Admin : supprimer un user
 exports.adminDeleteOneUser = (req, res, next)=>{
     const idUser = req.params.id
-    User.findOne({where  : {id: idUser},
-        include : [ {model : Role}]})
-       .then(user=>{
-           user.destroy({where  : {id: idUser}})
-           .then(()=>{
-            return res.status(200).json({message:"Le user a été supprimé avec succés"})
-        })
-        .catch(error=>{
-            console.log(error)
-            return res.status(400).json({message:"Le user n'a pas pus être détruit"})
-        })
-       })
-       .catch(error=>{
-           console.log(error)
-       })
+    User.findOne({where : {id:  idUser} ,include : [ {model : Role}]})
+        .then( user=>{
+            if(user.id !== idUser){
+                console.log(user.id)
+                return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
+            }
+            })
+        .then(()=>{
+            Profil.findOne({where : {userId: idUser}})
+                  .then( profil=>{
+                    if(profil.avatar !== null){
+                        const fileName = profil.avatar.split('/upload/')[1];
+                        fs.unlink(`upload/${fileName}`, (err => {
+                            if (err){
+                               return console.log(err);
+                            } 
+                            else {
+                              return  console.log("Image supprimée: " + fileName);
+                            }
+                        }));
+                    }
 
+                  })
+        })
+        .then( ()=>{
+            Post.findAll({where: {userId :  idUser }})
+            .then( posts=>{
+                for(let i=0; i < posts.length; i++){
+                    if(posts[i].imageUrl){
+                        const filename =posts[i].imageUrl.split('/upload/')[1];
+                fs.unlink(`./upload/${filename}`, (error) => {
+                    if(error){
+                        return console.log(error);
+                    }else {
+                        return console.log("Image supprimée: " + fileName);
+                    }
+                })
+
+                    }
+
+                }
+            })
+        })
+        .then( ()=>{
+            User.destroy({where : {id :  idUser}})
+                .then(()=>{
+                    return res.status(200).json({message:"Le user a été supprimé avec succés"})
+                })
+
+        })
+        .catch(error=>console.log(error))
 }
 
 

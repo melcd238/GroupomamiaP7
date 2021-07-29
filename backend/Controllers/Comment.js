@@ -1,5 +1,4 @@
 const db = require("../models");
-const fs = require('fs');
 const { comment, user } = require("../models");
 const User = db.user;
 const Post = db.post;
@@ -135,6 +134,3 @@ exports.adminDeleteComment = (req, res, next)=>{
       })
 }
 
-
-
-    
