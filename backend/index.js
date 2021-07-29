@@ -14,13 +14,15 @@ const likeRoutes = require('./Routes/Like')
 const db =require('./models/Index');
 const Role = db.role;
 
-db.sequelize.sync({force:true}).then(() => {
-  console.log('Synchronise');
-  initial();
-});
- //  db.sequelize.sync()
+// Lors de la phase de développement, je drop ma base de donnée à chaque modification du back. 
+//db.sequelize.sync({force:true}).then(() => {
+ // console.log('Synchronise');
+ // initial();
+//});
+   db.sequelize.sync()
  
-// Pour la phase de développement : 
+// Pour la phase de développement :
+// Création de la table Role lors de la synchronisation de la bbd 
  function initial() {
     Role.create({  
       id: 1,
@@ -32,6 +34,7 @@ db.sequelize.sync({force:true}).then(() => {
       name: "admin"
     });
   }
+  
 app.use(cors())
 
 

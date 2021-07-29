@@ -88,9 +88,8 @@ function Login (props){
         axios.post('login', user)
         .then(response =>{
             if (response.data.accessToken) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-                props.history.push('/filActu') 
-                window.location.reload(); 
+                localStorage.setItem("user", JSON.stringify(response.data))
+                window.location = "/filActu"
             }
              
             

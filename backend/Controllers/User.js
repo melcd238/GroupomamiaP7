@@ -178,10 +178,10 @@ exports.updatePassword = (req, res, next)=>{
 exports.deleteOneUser = (req, res, next)=>{
     const userid = UserId(req)
     User.findOne({where : {id:  userid}})
-        .then( user=>{
-            if(user.id !== userid){
+        .then( user=>{ 
+            if(!user){
                 console.log(user.id)
-                return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
+                return res.status(400).json({message:"Utilisateur introuvable"})
             }
             })
         .then(()=>{
@@ -235,9 +235,9 @@ exports.adminDeleteOneUser = (req, res, next)=>{
     const idUser = req.params.id
     User.findOne({where : {id:  idUser} ,include : [ {model : Role}]})
         .then( user=>{
-            if(user.id !== idUser){
+            if(!user){
                 console.log(user.id)
-                return res.status(400).json({message:"vous ne pouvez pas supprimer ce User"})
+                return res.status(400).json({message:"Utilisateur introuvable"})
             }
             })
         .then(()=>{

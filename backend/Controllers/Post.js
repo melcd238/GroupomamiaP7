@@ -1,6 +1,5 @@
 const db = require("../models");
 const fs = require('fs');
-const { post } = require("../models");
 const User = db.user;
 const Post = db.post;
 const Comment = db.comment

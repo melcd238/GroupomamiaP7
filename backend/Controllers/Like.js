@@ -1,5 +1,4 @@
 const db = require("../models");
-const { like, user } = require("../models");
 const User = db.user;
 const Post = db.post;
 const Like = db.like;

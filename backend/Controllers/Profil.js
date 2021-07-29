@@ -1,6 +1,5 @@
 const db = require("../models");
 const fs = require('fs');
-const { profil } = require("../models");
 const User = db.user;
 const Profil = db.profil;
 const UserId = require('../Services/GetUserId')
